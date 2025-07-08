@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarohi Mathur - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-green: #00ff88;
+            --secondary-green: #00cc6a;
+            --accent-blue: #4ecdc4;
+            --dark-bg: #0a0a0a;
+            --card-bg: #111111;
+            --border-color: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --error-color: #ff6b6b;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Advanced Plexus Background --- */
+        #plexus-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        /* --- Netflix-style intro --- */
+        .intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeOut 4.5s ease-in-out forwards;
+        }
+
+        .intro-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: 16px;
+            background: linear-gradient(45deg, var(--primary-green), var(--secondary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            animation: glow 2s ease-in-out infinite alternate, textAppear 2.5s ease-out;
+        }
+        
+        @keyframes textAppear {
+            from { opacity: 0; transform: scale(0.5); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px var(--secondary-green); }
+            to { text-shadow: 0 0 50px var(--primary-green); }
+        }
+
+        @keyframes fadeOut {
+            0%, 75% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        /* --- Main Container & Pages --- */
+        .main-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            animation: mainAppear 1.5s ease-out forwards;
+            animation-delay: 4s;
+        }
+        
+        .page-content {
+            display: none; /* Hidden by default */
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            animation: mainAppear 1.5s ease-out forwards;
+            padding: 4rem;
+        }
+
+        @keyframes mainAppear {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Header Section --- */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .name {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .description {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Terminal Section --- */
+        .terminal-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .terminal-header {
+            background: #1e1e1e;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        .terminal {
+            padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-green);
+            min-height: 400px;
+        }
+        .terminal-output {
+            margin-bottom: 1.5rem;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        .line { white-space: pre-wrap; word-wrap: break-word; }
+        .prompt { color: var(--primary-green); }
+        .command { color: var(--text-primary); }
+        .error { color: var(--error-color); }
+        .info { color: var(--accent-blue); }
+        #command-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+            width: 100%;
+            caret-color: var(--primary-green);
+        }
+
+        /* --- Page Content Styling --- */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary-green);
+            padding-bottom: 1rem;
+            width: 100%;
+        }
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        .page-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            width: 100%;
+        }
+        .back-button, .download-button {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-button {
+             position: fixed;
+             top: 2rem;
+             left: 2rem;
+             z-index: 100;
+        }
+        .back-button:hover, .download-button:hover {
+            background: var(--primary-green);
+            color: var(--dark-bg);
+            border-color: var(--primary-green);
+        }
+
+        /* Project Cards Styling */
+        #projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-green);
+        }
+        .project-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+        .project-card h3 { color: var(--primary-green); }
+        .project-card .date { font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 0.9rem; }
+        .project-card p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .project-card .tech { margin-top: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--accent-blue); word-spacing: -2px; }
+        .project-card .tech strong { color: var(--text-primary); }
+        .project-card a { color: var(--accent-blue); text-decoration: none; font-weight: bold; }
+        .project-card a:hover { text-decoration: underline; }
+        
+        /* Resume Page Styling */
+        #resume-container .resume-section {
+            margin-bottom: 2.5rem;
+        }
+        #resume-container h2 {
+            font-size: 1.8rem;
+            color: var(--primary-green);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        #resume-container h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        #resume-container p {
+            margin-bottom: 0.5rem;
+        }
+        #resume-container ul {
+            list-style-type: '• ';
+            padding-left: 1.5rem;
+        }
+        #resume-container .meta {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        #resume-container .resume-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        #resume-container .resume-header a {
+             color: var(--accent-blue);
+             text-decoration: none;
+        }
+         #resume-container .resume-header a:hover {
+            text-decoration: underline;
+         }
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .intro-text { font-size: 3rem; }
+            .name { font-size: 2.5rem; }
+            .page-title { font-size: 2rem; }
+            .back-button { top: 1rem; left: 1rem; padding: 0.5rem 1rem; }
+            .page-content {
+                padding: 5rem 1.5rem 1.5rem 1.5rem;
+            }
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="plexus-canvas"></canvas>
+
+    <div class="intro">
+        <div class="intro-text">AAROHI<br>MATHUR</div>
+    </div>
+
+    <div class="main-container" id="main-container">
+        <header class="header">
+            <h1 class="name">Aarohi Mathur</h1>
+            <p class="description">Aspiring AI Engineer | Building, Learning, Innovating</p>
+        </header>
+
+        <section class="terminal-section">
+            <div class="terminal-container">
+                <div class="terminal-header">aarohi@portfolio:~$</div>
+                <div class="terminal" onclick="document.getElementById('command-input').focus()">
+                    <div class="terminal-output" id="output"></div>
+                    <div class="input-line">
+                        <span class="prompt">$&nbsp;</span>
+                        <input type="text" id="command-input" autocomplete="off" autofocus>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="page-about" class="page-content">
+        <button class="back-button">← Back</button>
+        <div class="page-header"><h1 class="page-title">About Me</h1></div>
+        <div class="page-body">
+            <p>I’m Aarohi Mathur, a third-year Computer Science student at UPES Dehradun specializing in Artificial Intelligence and Machine Learning. I am driven to build technology that is not just intelligent, but also insightful and impactful, with a core focus on generative AI and natural language processing.</p>
+            <p style="margin-top: 1.5rem;">I thrive on collaboration and am an active contributor to open-source communities, where I am constantly learning and growing. My creative outlet is portrait sketching, a practice in patience and observation that inspires and informs my technical work.</p>
+        </div>
+    </div>
+
+    <div id="page-skills" class="page-content">
+        <button class="back-button">← Back</button>
+        <div class="page-header"><h1 class="page-title">Technical Skills</h1></div>
+        <div class="page-body" id="skills-container">
+            </div>
+    </div>
+
+    <div id="page-projects" class="page-content">
+        <button class="back-button">← Back</button>
+        <div class="page-header"><h1 class="page-title">My Projects</h1></div>
+        <div class="page-body" id="projects-container">
+            </div>
+    </div>
+
+    <div id="page-contact" class="page-content">
+        <button class="back-button">← Back</button>
+        <div class="page-header"><h1 class="page-title">Get In Touch</h1></div>
+        <div class="page-body" id="contact-container">
+            </div>
+    </div>
+
+    <div id="page-resume" class="page-content">
+        <button class="back-button">← Back</button>
+        <div class="page-header">
+            <h1 class="page-title">Resume</h1>
+            <a href="Aarohi_Mathur_Resume.pdf" download class="download-button">Download PDF</a>
+        </div>
+        <div class="page-body" id="resume-container">
+            </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Element References ---
+        const input = document.getElementById('command-input');
+        const output = document.getElementById('output');
+        const mainContainer = document.getElementById('main-container');
+
+        // --- CUSTOMIZE YOUR DETAILS ---
+        const CONTACT_INFO = {
+            email: "aarohi.123455@stu.upes.ac.in",
+            phone: "+91-8764097870",
+            github: "https://github.com/aarohim24", // Replace with your actual GitHub username
+            codechef: "https://www.codechef.com/users/aarohim024",
+            linkedIn: "https://www.linkedin.com/in/aarohi-mathur-60968121a/"// Replace with your actual CodeChef username
+        };
+
+        const SKILLS_DATA = {
+            "Languages": "Python, C/C++, Java, JavaScript, HTML, CSS, Bash",
+            "Frameworks/Libraries": "Flask, Streamlit, TensorFlow, PyTorch, Hugging Face Transformers, scikit-learn, NLTK, NumPy, Pandas, Matplotlib, Plotly, Swing, Tkinter, libcurl",
+            "Databases/Tools": "SQLite, MySQL, MongoDB, Git, REST APIs, Linux, Google Colab, FFmpeg, OpenAI API",
+        };
+        
+        const PROJECTS_DATA = [
+             {
+                title: "YouTube Video Summarizer",
+                date: "June 2025",
+                description: "Built a Streamlit app to download, transcribe, and summarize YouTube videos using GPT-4 and Whisper, reducing manual effort by ~90%.",
+                tech: "Python, Streamlit, GPT-4, Whisper, yt-dlp, FFmpeg",
+                githubLink: "https://github.com/aarohim24/Youtube-Video-Summarizer"
+            },
+            {
+                title: "Online Shopper Behavior Analysis",
+                date: "Feb 2025",
+                description: "Analyzed 1,000+ e-commerce sessions with K-Means and built a Random Forest classifier (~90% accuracy) with sentiment analysis.",
+                tech: "Python, Scikit-learn, Pandas, Plotly, Hugging Face",
+                githubLink: "https://github.com/aarohim24/Online-Shopper-Behavior-Analysis"
+            },
+            {
+                title: "Cell Image Classification Using CNNs",
+                date: "Dec 2024",
+                description: "Trained a CNN to classify 12,000+ blood cell images into 4 categories with 90% validation accuracy using TensorFlow/Keras.",
+                tech: "Python, TensorFlow/Keras, NumPy, Google Colab",
+                githubLink: "https://github.com/aarohim24/Cell-Image-Classification"
+            },
+            {
+                title: "TimeWarp - Digital Time Tracker",
+                date: "Nov 2024",
+                description: "Developed a Flask-based desktop activity tracker with real-time SQLite logging and Matplotlib visualizations to boost productivity tracking.",
+                tech: "Python, Flask, SQLite, Pandas, Matplotlib, HTML/CSS",
+                githubLink: "https://github.com/aarohim24/TimeWarp-Digital-Time-Tracker"
+            },
+            {
+                title: "Student Housing Management System",
+                date: " March 2025",
+                description: "A full-stack Java application using Swing and MySQL for managing student housing, featuring user/admin roles and a complete booking flow.",
+                tech: "Java, Swing, MySQL",
+                githubLink: "https://github.com/aarohim24/Property-Rental-System"
+            },
+            {
+                title: "Electricity Bill Calculator",
+                date: "Dec 2025",
+                description: "A Java Swing GUI application that calculates monthly electricity bills based on tiered-rate slabs and validates user input.",
+                tech: "Java, Swing",
+                githubLink: "https://github.com/aarohim24/Electricity-Bill-Generator-Java-OOP-"
+            },
+            {
+                title: "Short Notes Generator",
+                date: "Feb 2024",
+                description: "A C++ command-line tool that uses OpenAI's GPT API to generate concise, revision-friendly summaries from PDF and DOCX files.",
+                tech: "C++, Generative AI (OpenAI), libcurl",
+                githubLink: "https://github.com/aarohim24/NotesGenerator"
+            },
+            {
+                title: "2048 Game",
+                date: "Nov 2023",
+                description: "The classic 2048 game built in C for the command line, featuring dynamic tile generation, merging mechanics, and win/loss detection.",
+                tech: "C, Standard Libraries",
+                githubLink: "https://github.com/aarohim24/2048Game"
+            },
+            {
+                title: "Typing Speed Test",
+                date: "Oct 2023",
+                description: "A Python tool built with Tkinter that measures typing speed (WPM) and accuracy in real-time, visualizing performance with Matplotlib.",
+                tech: "Python, Tkinter, Matplotlib",
+                githubLink: "https://github.com/aarohim24/Typing-Speed-Calculator-Python"
+            }
+
+        ];
+
+        // --- Page Navigation ---
+        function showPage(pageId) {
+            mainContainer.style.display = 'none';
+            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+            const page = document.getElementById(`page-${pageId}`);
+            if (page) {
+                page.style.display = 'flex';
+                if (pageId === 'projects') renderProjects();
+                if (pageId === 'skills') renderSkills();
+                if (pageId === 'contact') renderContact();
+                if (pageId === 'resume') renderResume();
+            }
+        }
+
+        function showTerminal() {
+            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+            mainContainer.style.display = 'flex';
+            input.focus();
+        }
+
+        document.querySelectorAll('.back-button').forEach(button => {
+            button.addEventListener('click', showTerminal);
+        });
+
+        const commands = {
+            'help': {
+                description: "Shows this list of commands.",
+                action: () => appendLine(
+                    `Available Commands:<br>` +
+                    Object.keys(commands).map(key => `  <span class="command">${key}</span> - ${commands[key].description}`).join('<br>'), 
+                    'info'
+                )
+            },
+            'about': { description: "Opens the 'About Me' page.", action: () => showPage('about') },
+            'skills': { description: "Opens my 'Technical Skills' page.", action: () => showPage('skills') },
+            'projects': { description: "Opens my 'Projects' page.", action: () => showPage('projects') },
+            'resume': { description: "Displays my resume.", action: () => showPage('resume') },
+            'contact': { description: "Opens my 'Contact' page.", action: () => showPage('contact') },
+            'clear': { description: "Clears the terminal screen.", action: () => { output.innerHTML = ''; } },
+            'date': { description: "Displays the current date.", action: () => appendLine(new Date().toLocaleString()) },
+            'whoami': { description: 'Displays current user.', action: () => appendLine('guest_user') },
+        };
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter') return;
+            
+            const commandText = input.value.trim().toLowerCase();
+            if (commandText === '') return;
+
+            appendLine(`<span class="prompt">$&nbsp;</span><span class="command">${commandText}</span>`);
+
+            const command = commands[commandText];
+            if (command) {
+                command.action();
+            } else {
+                appendLine(`Command not found: '${commandText}'. Type 'help' for options.`, 'error');
+            }
+
+            input.value = '';
+            output.scrollTop = output.scrollHeight;
+        });
+        
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = ''; 
+            PROJECTS_DATA.forEach(proj => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <div class="project-card-header">
+                        <h3>${proj.title}</h3>
+                        <span class="date">${proj.date}</span>
+                    </div>
+                    <p>${proj.description}</p>
+                    <div class="tech"><strong>Technologies:</strong> ${proj.tech}</div>
+                    <div style="margin-top: 1rem;"><a href="${proj.githubLink}" target="_blank">View on GitHub</a></div>`;
+                container.appendChild(card);
+            });
+        }
+
+        function renderSkills() {
+            const container = document.getElementById('skills-container');
+            container.innerHTML = Object.entries(SKILLS_DATA).map(([category, list]) => `
+                <h3 style="color: var(--primary-green); margin-top: 1.5rem; margin-bottom: 0.5rem;">${category}</h3>
+                <p>${list}</p>
+            `).join('');
+        }
+        
+        function renderContact() {
+            const container = document.getElementById('contact-container');
+            container.innerHTML = `
+                <p>Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team.</p>
+                <p style="margin-top: 2rem;"><strong>Email:</strong> <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a></p>
+                <p><strong>Phone:</strong> <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a></p>
+                <p><strong>GitHub:</strong> <a href="${CONTACT_INFO.github}" target="_blank">${CONTACT_INFO.github}</a></p>
+                <p><strong>CodeChef:</strong> <a href="${CONTACT_INFO.codechef}" target="_blank">${CONTACT_INFO.codechef}</a></p>
+            `;
+        }
+
+        function renderResume() {
+            const container = document.getElementById('resume-container');
+            
+            const projectsHTML = PROJECTS_DATA.map(p => `
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <h3>${p.title}</h3>
+                        <p class="meta">${p.date}</p>
+                    </div>
+                    <ul><li>${p.description.replace(/\n• /g, '</li><li>')}</li></ul>
+                    <p><strong>Technologies used:</strong> ${p.tech}</p>
+                </div>
+            `).join('');
+
+            const skillsHTML = Object.entries(SKILLS_DATA).map(([category, list]) => `
+                <p><strong>${category}:</strong> ${list}</p>
+            `).join('');
+            
+            container.innerHTML = `
+                <div class="resume-header">
+                     <p>
+                        <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a> | 
+                        <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a> | 
+                        <a href="${CONTACT_INFO.github}" target="_blank">GitHub</a> | 
+                        <a href="${CONTACT_INFO.codechef}" target="_blank">CodeChef</a>
+                     </p>
+                </div>
+
+                <div class="resume-section">
+                    <h2>EDUCATION</h2>
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>University Of Petroleum And Energy Studies, Dehradun</h3>
+                        <p class="meta">2023-2027 (Expected)</p>
+                    </div>
+                    <p>B.Tech Computer Science, Specialization in AI/ML</p>
+                </div>
+
+                <div class="resume-section">
+                    <h2>PROJECTS</h2>
+                    ${projectsHTML}
+                </div>
+
+                <div class="resume-section">
+                    <h2>TECHNICAL SKILLS</h2>
+                    ${skillsHTML}
+                </div>
+
+                <div class="resume-section">
+                    <h2>LANGUAGES & EXTRACURRICULAR ACTIVITIES</h2>
+                    <p><strong>Languages:</strong> English, Hindi</p>
+                    <p><strong>Hobbies:</strong> Skateboarding, Type Racing, Sketching, Painting</p>
+                    <p><strong>Leadership & Volunteer experience:</strong></p>
+                    <ul>
+                        <li>Head of Creative Team, Cultural Committee (UPES): Led a team of 100+ for campus annual fest.</li>
+                        <li>City Head (Kota), Logistics & Creative Head - Share A Book India Association: Coordinated nationwide literacy drives, managed events, and created marketing materials.</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // --- Utility Functions ---
+        function appendLine(text, className = 'output') {
+            output.innerHTML += `<div class="line ${className}">${text}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // --- Plexus Background Animation ---
+        const canvas = document.getElementById('plexus-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+        const maxDistance = 120;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 255, 136, 0.8)';
+                ctx.fill();
+            }
+        }
+
+        function initPlexus() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 255, 136, ${1 - distance / maxDistance})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animatePlexus() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animatePlexus);
+        }
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initPlexus();
+        });
+
+        mainContainer.addEventListener('animationend', () => {
+            mainContainer.style.animation = 'none';
+            mainContainer.style.opacity = '1';
+        }, { once: true });
+
+        appendLine("Welcome to Aarohi Mathur's Portfolio.", 'info');
+        appendLine("Type 'help' to see the list of available commands.", 'info');
+        initPlexus();
+        animatePlexus();
+        input.focus();
+    });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
