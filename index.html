@@ -102,7 +102,6 @@
             max-width: 1200px;
             margin: 0 auto;
             min-height: 100vh;
-            display: flex;
             flex-direction: column;
             justify-content: center;
             opacity: 0;
@@ -472,28 +471,37 @@
         ];
 
         // --- Page Navigation ---
-        function showPage(pageId) {
-            mainContainer.style.display = 'none';
-            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
-            const page = document.getElementById(`page-${pageId}`);
-            if (page) {
-                page.style.display = 'flex';
-                if (pageId === 'projects') renderProjects();
-                if (pageId === 'skills') renderSkills();
-                if (pageId === 'contact') renderContact();
-                if (pageId === 'resume') renderResume();
-            }
-        }
+       function showPage(pageId) {
+    mainContainer.style.display = 'none';
+    document.querySelectorAll('.page-content').forEach(p => {
+        p.style.display = 'none';
+        p.style.opacity = '0'; // Reset opacity for animation
+    });
+    const page = document.getElementById(`page-${pageId}`);
+    if (page) {
+        page.style.display = 'flex';
+        // Trigger reflow to enable animation
+        void page.offsetWidth;
+        page.style.opacity = '1';
+        
+        if (pageId === 'projects') renderProjects();
+        if (pageId === 'skills') renderSkills();
+        if (pageId === 'contact') renderContact();
+        if (pageId === 'resume') renderResume();
+    }
+}
 
-        function showTerminal() {
-            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
-            mainContainer.style.display = 'flex';
-            input.focus();
-        }
-
-        document.querySelectorAll('.back-button').forEach(button => {
-            button.addEventListener('click', showTerminal);
-        });
+       function showTerminal() {
+    document.querySelectorAll('.page-content').forEach(p => {
+        p.style.display = 'none';
+        p.style.opacity = '0';
+    });
+    mainContainer.style.display = 'flex';
+    // Trigger reflow to enable animation if needed
+    void mainContainer.offsetWidth;
+    mainContainer.style.opacity = '1';
+    input.focus();
+});
 
         const commands = {
             'help': {
