@@ -380,38 +380,40 @@
         <div class="page-body" id="resume-container">
             </div>
     </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Element References ---
+    const input = document.getElementById('command-input');
+    const output = document.getElementById('output');
+    const mainContainer = document.getElementById('main-container');
+    const canvas = document.getElementById('plexus-canvas');
+    const ctx = canvas.getContext('2d');
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Element References ---
-        const input = document.getElementById('command-input');
-        const output = document.getElementById('output');
-        const mainContainer = document.getElementById('main-container');
+    // --- Your Data ---
+    const CONTACT_INFO = {
+        email: "aarohi.123455@stu.upes.ac.in",
+        phone: "+91-8764097870",
+        github: "https://github.com/aarohim24",
+        codechef: "https://www.codechef.com/users/aarohim024",
+        linkedIn: "https://www.linkedin.com/in/aarohi-mathur-60968121a/"
+    };
 
-        // --- CUSTOMIZE YOUR DETAILS ---
-        const CONTACT_INFO = {
-            email: "aarohi.123455@stu.upes.ac.in",
-            phone: "+91-8764097870",
-            github: "https://github.com/aarohim24", // Replace with your actual GitHub username
-            codechef: "https://www.codechef.com/users/aarohim024",
-            linkedIn: "https://www.linkedin.com/in/aarohi-mathur-60968121a/"// Replace with your actual CodeChef username
-        };
-
-        const SKILLS_DATA = {
-            "Languages": "Python, C/C++, Java, JavaScript, HTML, CSS, Bash",
-            "Frameworks/Libraries": "Flask, Streamlit, TensorFlow, PyTorch, Hugging Face Transformers, scikit-learn, NLTK, NumPy, Pandas, Matplotlib, Plotly, Swing, Tkinter, libcurl",
-            "Databases/Tools": "SQLite, MySQL, MongoDB, Git, REST APIs, Linux, Google Colab, FFmpeg, OpenAI API",
-        };
+    const SKILLS_DATA = {
+        "Languages": "Python, C/C++, Java, JavaScript, HTML, CSS, Bash",
+        "Frameworks/Libraries": "Flask, Streamlit, TensorFlow, PyTorch, Hugging Face Transformers, scikit-learn, NLTK, NumPy, Pandas, Matplotlib, Plotly, Swing, Tkinter, libcurl",
+        "Databases/Tools": "SQLite, MySQL, MongoDB, Git, REST APIs, Linux, Google Colab, FFmpeg, OpenAI API",
+    };
+    
+    const PROJECTS_DATA = [
+        {
+            title: "YouTube Video Summarizer",
+            date: "June 2025",
+            description: "Built a Streamlit app to download, transcribe, and summarize YouTube videos using GPT-4 and Whisper, reducing manual effort by ~90%.",
+            tech: "Python, Streamlit, GPT-4, Whisper, yt-dlp, FFmpeg",
+            githubLink: "https://github.com/aarohim24/Youtube-Video-Summarizer"
+        },
         
-        const PROJECTS_DATA = [
-             {
-                title: "YouTube Video Summarizer",
-                date: "June 2025",
-                description: "Built a Streamlit app to download, transcribe, and summarize YouTube videos using GPT-4 and Whisper, reducing manual effort by ~90%.",
-                tech: "Python, Streamlit, GPT-4, Whisper, yt-dlp, FFmpeg",
-                githubLink: "https://github.com/aarohim24/Youtube-Video-Summarizer"
-            },
-            {
+ {
                 title: "Online Shopper Behavior Analysis",
                 date: "Feb 2025",
                 description: "Analyzed 1,000+ e-commerce sessions with K-Means and built a Random Forest classifier (~90% accuracy) with sentiment analysis.",
@@ -470,185 +472,166 @@
 
         ];
 
-        // --- Page Navigation ---
-       function showPage(pageId) {
-    mainContainer.style.display = 'none';
-    document.querySelectorAll('.page-content').forEach(p => {
-        p.style.display = 'none';
-        p.style.opacity = '0'; // Reset opacity for animation
-    });
-    const page = document.getElementById(`page-${pageId}`);
-    if (page) {
-        page.style.display = 'flex';
-        // Trigger reflow to enable animation
-        void page.offsetWidth;
-        page.style.opacity = '1';
-        
-        if (pageId === 'projects') renderProjects();
-        if (pageId === 'skills') renderSkills();
-        if (pageId === 'contact') renderContact();
-        if (pageId === 'resume') renderResume();
+    // --- Utility Functions ---
+    function appendLine(text, className = 'line') {
+        if (!output) {
+            console.error("Output element not found!");
+            return;
+        }
+        output.innerHTML += `<div class="${className}">${text}</div>`;
+        output.scrollTop = output.scrollHeight;
     }
-}
 
-       function showTerminal() {
-    document.querySelectorAll('.page-content').forEach(p => {
-        p.style.display = 'none';
-        p.style.opacity = '0';
-    });
-    mainContainer.style.display = 'flex';
-    // Trigger reflow to enable animation if needed
-    void mainContainer.offsetWidth;
-    mainContainer.style.opacity = '1';
-    input.focus();
-});
+    // --- Terminal Initialization ---
+    function initTerminal() {
+        output.innerHTML = '';
+        appendLine("Welcome to Aarohi Mathur's Portfolio.", 'info');
+        appendLine("Type 'help' to see available commands", 'info');
+        input.focus();
+    }
 
-        const commands = {
-            'help': {
-                description: "Shows this list of commands.",
-                action: () => appendLine(
-                    `Available Commands:<br>` +
-                    Object.keys(commands).map(key => `  <span class="command">${key}</span> - ${commands[key].description}`).join('<br>'), 
-                    'info'
-                )
-            },
-            'about': { description: "Opens the 'About Me' page.", action: () => showPage('about') },
-            'skills': { description: "Opens my 'Technical Skills' page.", action: () => showPage('skills') },
-            'projects': { description: "Opens my 'Projects' page.", action: () => showPage('projects') },
-            'resume': { description: "Displays my resume.", action: () => showPage('resume') },
-            'contact': { description: "Opens my 'Contact' page.", action: () => showPage('contact') },
-            'clear': { description: "Clears the terminal screen.", action: () => { output.innerHTML = ''; } },
-            'date': { description: "Displays the current date.", action: () => appendLine(new Date().toLocaleString()) },
-            'whoami': { description: 'Displays current user.', action: () => appendLine('guest_user') },
-        };
-
-        input.addEventListener('keydown', (e) => {
-            if (e.key !== 'Enter') return;
-            
-            const commandText = input.value.trim().toLowerCase();
-            if (commandText === '') return;
-
-            appendLine(`<span class="prompt">$&nbsp;</span><span class="command">${commandText}</span>`);
-
-            const command = commands[commandText];
-            if (command) {
-                command.action();
-            } else {
-                appendLine(`Command not found: '${commandText}'. Type 'help' for options.`, 'error');
+    // --- Command Handling ---
+    const commands = {
+        'help': {
+            description: "Shows this list of commands",
+            action: () => {
+                appendLine("Available commands:", 'info');
+                Object.entries(commands).forEach(([cmd, details]) => {
+                    appendLine(`${cmd.padEnd(10)} - ${details.description}`, 'info');
+                });
             }
+        },
+        'about': { description: "About me page", action: () => showPage('about') },
+        'skills': { description: "Show technical skills", action: () => showPage('skills') },
+        'projects': { description: "Show my projects", action: () => showPage('projects') },
+        'resume': { description: "Show my resume", action: () => showPage('resume') },
+        'contact': { description: "Contact information", action: () => showPage('contact') },
+        'clear': { description: "Clear the terminal", action: () => output.innerHTML = '' },
+        'whoami': { description: "Show current user", action: () => appendLine("aarohi@portfolio", 'info') },
+        'date': { description: "Show current date", action: () => appendLine(new Date().toLocaleString(), 'info') }
+    };
 
-            input.value = '';
-            output.scrollTop = output.scrollHeight;
+    input.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        
+        const commandText = input.value.trim().toLowerCase();
+        if (commandText === '') return;
+
+        appendLine(`$ ${commandText}`, 'command');
+
+        if (commands[commandText]) {
+            commands[commandText].action();
+        } else {
+            appendLine(`Command not found: ${commandText}. Type 'help' for options.`, 'error');
+        }
+
+        input.value = '';
+    });
+
+    // --- Page Navigation ---
+    function showPage(pageId) {
+        mainContainer.style.display = 'none';
+        document.querySelectorAll('.page-content').forEach(p => {
+            p.style.display = 'none';
+            p.style.opacity = '0';
         });
         
-        function renderProjects() {
-            const container = document.getElementById('projects-container');
-            container.innerHTML = ''; 
-            PROJECTS_DATA.forEach(proj => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                card.innerHTML = `
-                    <div class="project-card-header">
-                        <h3>${proj.title}</h3>
-                        <span class="date">${proj.date}</span>
-                    </div>
-                    <p>${proj.description}</p>
-                    <div class="tech"><strong>Technologies:</strong> ${proj.tech}</div>
-                    <div style="margin-top: 1rem;"><a href="${proj.githubLink}" target="_blank">View on GitHub</a></div>`;
-                container.appendChild(card);
-            });
-        }
-
-        function renderSkills() {
-            const container = document.getElementById('skills-container');
-            container.innerHTML = Object.entries(SKILLS_DATA).map(([category, list]) => `
-                <h3 style="color: var(--primary-green); margin-top: 1.5rem; margin-bottom: 0.5rem;">${category}</h3>
-                <p>${list}</p>
-            `).join('');
-        }
-        
-        function renderContact() {
-            const container = document.getElementById('contact-container');
-            container.innerHTML = `
-                <p>Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team.</p>
-                <p style="margin-top: 2rem;"><strong>Email:</strong> <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a></p>
-                <p><strong>Phone:</strong> <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a></p>
-                <p><strong>GitHub:</strong> <a href="${CONTACT_INFO.github}" target="_blank">${CONTACT_INFO.github}</a></p>
-                <p><strong>CodeChef:</strong> <a href="${CONTACT_INFO.codechef}" target="_blank">${CONTACT_INFO.codechef}</a></p>
-            `;
-        }
-
-        function renderResume() {
-            const container = document.getElementById('resume-container');
+        const page = document.getElementById(`page-${pageId}`);
+        if (page) {
+            page.style.display = 'flex';
+            void page.offsetWidth;
+            page.style.opacity = '1';
             
-            const projectsHTML = PROJECTS_DATA.map(p => `
-                <div style="margin-bottom: 1.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                        <h3>${p.title}</h3>
-                        <p class="meta">${p.date}</p>
-                    </div>
-                    <ul><li>${p.description.replace(/\n• /g, '</li><li>')}</li></ul>
-                    <p><strong>Technologies used:</strong> ${p.tech}</p>
-                </div>
-            `).join('');
-
-            const skillsHTML = Object.entries(SKILLS_DATA).map(([category, list]) => `
-                <p><strong>${category}:</strong> ${list}</p>
-            `).join('');
-            
-            container.innerHTML = `
-                <div class="resume-header">
-                     <p>
-                        <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a> | 
-                        <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a> | 
-                        <a href="${CONTACT_INFO.github}" target="_blank">GitHub</a> | 
-                        <a href="${CONTACT_INFO.codechef}" target="_blank">CodeChef</a>
-                     </p>
-                </div>
-
-                <div class="resume-section">
-                    <h2>EDUCATION</h2>
-                    <div style="display: flex; justify-content: space-between;">
-                        <h3>University Of Petroleum And Energy Studies, Dehradun</h3>
-                        <p class="meta">2023-2027 (Expected)</p>
-                    </div>
-                    <p>B.Tech Computer Science, Specialization in AI/ML</p>
-                </div>
-
-                <div class="resume-section">
-                    <h2>PROJECTS</h2>
-                    ${projectsHTML}
-                </div>
-
-                <div class="resume-section">
-                    <h2>TECHNICAL SKILLS</h2>
-                    ${skillsHTML}
-                </div>
-
-                <div class="resume-section">
-                    <h2>LANGUAGES & EXTRACURRICULAR ACTIVITIES</h2>
-                    <p><strong>Languages:</strong> English, Hindi</p>
-                    <p><strong>Hobbies:</strong> Skateboarding, Type Racing, Sketching, Painting</p>
-                    <p><strong>Leadership & Volunteer experience:</strong></p>
-                    <ul>
-                        <li>City Head (Kota), Logistics & Creative Head - Share A Book India Association: Coordinated nationwide literacy drives, managed events, and created marketing materials.</li>
-                    </ul>
-                </div>
-            `;
+            if (pageId === 'projects') renderProjects();
+            if (pageId === 'skills') renderSkills();
+            if (pageId === 'contact') renderContact();
+            if (pageId === 'resume') renderResume();
         }
+    }
 
-        // --- Utility Functions ---
-        function appendLine(text, className = 'output') {
-            output.innerHTML += `<div class="line ${className}">${text}</div>`;
-            output.scrollTop = output.scrollHeight;
-        }
+    function showTerminal() {
+        document.querySelectorAll('.page-content').forEach(p => {
+            p.style.display = 'none';
+            p.style.opacity = '0';
+        });
+        mainContainer.style.display = 'flex';
+        void mainContainer.offsetWidth;
+        mainContainer.style.opacity = '1';
+        input.focus();
+    }
 
-        // --- Plexus Background Animation ---
-        const canvas = document.getElementById('plexus-canvas');
-        const ctx = canvas.getContext('2d');
+    // --- Content Rendering ---
+    function renderProjects() {
+        const container = document.getElementById('projects-container');
+        container.innerHTML = PROJECTS_DATA.map(proj => `
+            <div class="project-card">
+                <div class="project-card-header">
+                    <h3>${proj.title}</h3>
+                    <span class="date">${proj.date}</span>
+                </div>
+                <p>${proj.description}</p>
+                <div class="tech"><strong>Technologies:</strong> ${proj.tech}</div>
+                <div style="margin-top: 1rem;">
+                    <a href="${proj.githubLink}" target="_blank">View on GitHub</a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderSkills() {
+        const container = document.getElementById('skills-container');
+        container.innerHTML = Object.entries(SKILLS_DATA).map(([category, list]) => `
+            <h3 style="color: var(--primary-green); margin: 1.5rem 0 0.5rem;">${category}</h3>
+            <p>${list}</p>
+        `).join('');
+    }
+
+    function renderContact() {
+        const container = document.getElementById('contact-container');
+        container.innerHTML = `
+            <p>Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities.</p>
+            <p style="margin-top: 2rem;">
+                <strong>Email:</strong> <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a><br>
+                <strong>Phone:</strong> <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a><br>
+                <strong>GitHub:</strong> <a href="${CONTACT_INFO.github}" target="_blank">${CONTACT_INFO.github}</a><br>
+                <strong>LinkedIn:</strong> <a href="${CONTACT_INFO.linkedIn}" target="_blank">${CONTACT_INFO.linkedIn}</a>
+            </p>
+        `;
+    }
+
+    function renderResume() {
+        const container = document.getElementById('resume-container');
+        container.innerHTML = `
+            <div class="resume-header">
+                <p>
+                    <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a> | 
+                    <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a> | 
+                    <a href="${CONTACT_INFO.github}" target="_blank">GitHub</a> | 
+                    <a href="${CONTACT_INFO.linkedIn}" target="_blank">LinkedIn</a>
+                </p>
+            </div>
+            <div class="resume-section">
+                <h2>EDUCATION</h2>
+                <div style="display: flex; justify-content: space-between;">
+                    <h3>University Of Petroleum And Energy Studies, Dehradun</h3>
+                    <p class="meta">2023-2027 (Expected)</p>
+                </div>
+                <p>B.Tech Computer Science, Specialization in AI/ML</p>
+            </div>
+            <div class="resume-section">
+                <h2>TECHNICAL SKILLS</h2>
+                ${Object.entries(SKILLS_DATA).map(([category, list]) => `
+                    <p><strong>${category}:</strong> ${list}</p>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // --- Plexus Background Animation ---
+    function initPlexus() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
+        
         let particles = [];
         const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
         const maxDistance = 120;
@@ -675,13 +658,6 @@
             }
         }
 
-        function initPlexus() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
         function connectParticles() {
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
@@ -701,45 +677,39 @@
             }
         }
 
-        function animatePlexus() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
             connectParticles();
-            requestAnimationFrame(animatePlexus);
+            requestAnimationFrame(animate);
         }
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initPlexus();
-        });
 
-        mainContainer.addEventListener('animationend', () => {
-            mainContainer.style.animation = 'none';
-            mainContainer.style.opacity = '1';
-        }, { once: true });
+        // Initialize particles
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        animate();
+    }
 
-        appendLine("Welcome to Aarohi Mathur's Portfolio.", 'info');
-        appendLine("Type 'help' to see the list of available commands.", 'info');
-        initPlexus();
-        animatePlexus();
-        input.focus();
+    // --- Initialize Everything ---
+    initTerminal();
+    initPlexus();
+    
+    // Set up back buttons
+    document.querySelectorAll('.back-button').forEach(btn => {
+        btn.addEventListener('click', showTerminal);
     });
-    </script>
-</body>
-</html>
 
-
-
-
-
-
-
-
-
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        initPlexus();
+    });
+});
+</script>
 
 
 
