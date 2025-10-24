@@ -318,6 +318,238 @@
             border-color: var(--primary-green);
         }
 
+        /* --- About Page Animations --- */
+        .about-content {
+            position: relative;
+            overflow: hidden;
+        }
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .floating-icon {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-green);
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+            font-size: 2rem;
+        }
+        .floating-icon:nth-child(1) { top: 10%; left: 80%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 60%; left: 85%; animation-delay: 2s; }
+        .floating-icon:nth-child(3) { top: 30%; left: 75%; animation-delay: 4s; }
+        .floating-icon:nth-child(4) { top: 80%; left: 90%; animation-delay: 6s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            25% { transform: translateY(-20px) rotate(90deg); opacity: 0.3; }
+            50% { transform: translateY(-40px) rotate(180deg); opacity: 0.1; }
+            75% { transform: translateY(-20px) rotate(270deg); opacity: 0.3; }
+        }
+        .personality-blend {
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.05), transparent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
+        }
+
+        /* --- Skills Page Animations --- */
+        .skills-grid {
+            display: grid;
+            gap: 1.5rem;
+            position: relative;
+        }
+        .skill-category {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .skill-category:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-green), transparent);
+            animation: skillScan 3s linear infinite;
+            animation-delay: var(--delay, 0s);
+        }
+        .skill-category:nth-child(1) { --delay: 0s; }
+        .skill-category:nth-child(2) { --delay: 1s; }
+        .skill-category:nth-child(3) { --delay: 2s; }
+        @keyframes skillScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .skill-progress {
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-green), var(--primary-green));
+            border-radius: 2px;
+            width: 0%;
+            animation: fillProgress 2s ease-out forwards;
+            animation-delay: 1s;
+        }
+        @keyframes fillProgress {
+            to { width: var(--progress, 85%); }
+        }
+
+        /* --- Projects Page Animations --- */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: all 0.8s ease;
+        }
+        .project-card:hover::after {
+            right: 100%;
+        }
+        .project-tech-bg {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            color: var(--primary-green);
+            opacity: 0.05;
+            z-index: 0;
+            animation: rotateCode 20s linear infinite;
+        }
+        @keyframes rotateCode {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* --- Contact Page Animations --- */
+        .contact-links {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-item:hover {
+            border-color: var(--primary-green);
+            transform: translateX(10px);
+        }
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1));
+            transition: width 0.5s ease;
+        }
+        .contact-item:hover::before {
+            width: 100%;
+        }
+
+        /* --- Resume Page Animations --- */
+        .resume-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .resume-timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary-green), var(--secondary-green));
+            animation: timelineGrow 2s ease-out forwards;
+        }
+        @keyframes timelineGrow {
+            from { height: 0%; }
+            to { height: 100%; }
+        }
+        .resume-item {
+            position: relative;
+            margin-bottom: 2rem;
+            animation: slideInResume 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        .resume-item:nth-child(1) { animation-delay: 0.5s; }
+        .resume-item:nth-child(2) { animation-delay: 1s; }
+        .resume-item:nth-child(3) { animation-delay: 1.5s; }
+        @keyframes slideInResume {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .resume-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            border: 3px solid var(--dark-bg);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); box-shadow: 0 0 10px var(--primary-green); }
+        }
+
         /* Project Cards Styling */
         #projects-container {
             display: grid;
@@ -540,11 +772,19 @@
         </footer>
     </div>
 
-    <div id="page-about" class="page-content">
+        <div id="page-about" class="page-content">
         <button class="back-button">← Back</button>
         <div class="page-header"><h1 class="page-title">About Me</h1></div>
-        <div class="page-body">
-            <p>I’m Aarohi Mathur, a third-year Computer Science student at UPES Dehradun specializing in Artificial Intelligence and Machine Learning. I am driven to build technology that is not just intelligent, but also insightful and impactful, with a core focus on generative AI and natural language processing.</p>
+        <div class="page-body about-content">
+            <div class="floating-icons">
+                <div class="floating-icon">{}</div>
+                <div class="floating-icon">AI</div>
+                <div class="floating-icon">🎨</div>
+                <div class="floating-icon">⚡</div>
+            </div>
+            <div class="personality-blend">
+                <p>I'm Aarohi Mathur, a third-year Computer Science student at UPES Dehradun specializing in Artificial Intelligence and Machine Learning. I am driven to build technology that is not just intelligent, but also insightful and impactful, with a core focus on generative AI and natural language processing.</p>
+            </div>
             <p style="margin-top: 1.5rem;">I thrive on collaboration and am an active contributor to open-source communities, where I am constantly learning and growing. My creative outlet is portrait sketching, a practice in patience and observation that inspires and informs my technical work.</p>
         </div>
     </div>
@@ -914,14 +1154,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 projectCard.style.opacity = '0';
                 projectCard.style.transform = 'translateY(50px)';
                 
+                // Add contextual tech background symbol
+                const techSymbol = proj.tech.includes('Python') ? '{py}' : 
+                                 proj.tech.includes('Java') ? '{java}' : 
+                                 proj.tech.includes('C++') ? '{cpp}' : '{code}';
+                
                 projectCard.innerHTML = `
+                    <div class="project-tech-bg">${techSymbol}</div>
                     <div class="project-card-header">
                         <h3>${proj.title}</h3>
                         <span class="date">${proj.date}</span>
                     </div>
                     <p>${proj.description}</p>
                     <div class="tech"><strong>Technologies:</strong> ${proj.tech}</div>
-                    <div style="margin-top: 1rem;">
+                    <div style="margin-top: 1rem; position: relative; z-index: 1;">
                         <a href="${proj.githubLink}" target="_blank">View on GitHub</a>
                     </div>
                 `;
@@ -941,17 +1187,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSkills() {
         const container = document.getElementById('skills-container');
         container.innerHTML = '';
+        container.className = 'skills-grid';
         
         let delay = 0;
-        Object.entries(SKILLS_DATA).forEach(([category, list]) => {
+        Object.entries(SKILLS_DATA).forEach(([category, list], index) => {
             setTimeout(() => {
                 const skillSection = document.createElement('div');
+                skillSection.className = 'skill-category';
                 skillSection.style.opacity = '0';
                 skillSection.style.transform = 'translateX(-50px)';
                 
+                // Add contextual background symbol
+                const bgSymbol = index === 0 ? '&lt;/&gt;' : index === 1 ? '⚙️' : '🗄️';
+                const progressValue = index === 0 ? '90%' : index === 1 ? '85%' : '80%';
+                
                 skillSection.innerHTML = `
-                    <h3 style="color: var(--primary-green); margin: 1.5rem 0 0.5rem;">${category}</h3>
+                    <h3 style="color: var(--primary-green); margin-bottom: 1rem;">${category}</h3>
                     <p>${list}</p>
+                    <div class="skill-progress">
+                        <div class="skill-fill" style="--progress: ${progressValue}"></div>
+                    </div>
                 `;
                 
                 container.appendChild(skillSection);
@@ -971,12 +1226,36 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = `
             <div style="opacity: 0; transform: translateY(30px);">
                 <p>Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities.</p>
-                <p style="margin-top: 2rem;">
-                    <strong>Email:</strong> <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a><br>
-                    <strong>Phone:</strong> <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a><br>
-                    <strong>GitHub:</strong> <a href="${CONTACT_INFO.github}" target="_blank">${CONTACT_INFO.github}</a><br>
-                    <strong>LinkedIn:</strong> <a href="${CONTACT_INFO.linkedIn}" target="_blank">${CONTACT_INFO.linkedIn}</a>
-                </p>
+                <div class="contact-links">
+                    <div class="contact-item">
+                        <div class="contact-icon">@</div>
+                        <div>
+                            <strong>Email</strong><br>
+                            <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <strong>Phone</strong><br>
+                            <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">&lt;/&gt;</div>
+                        <div>
+                            <strong>GitHub</strong><br>
+                            <a href="${CONTACT_INFO.github}" target="_blank">View Projects</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">in</div>
+                        <div>
+                            <strong>LinkedIn</strong><br>
+                            <a href="${CONTACT_INFO.linkedIn}" target="_blank">Connect</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
         
@@ -999,31 +1278,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${CONTACT_INFO.linkedIn}" target="_blank">LinkedIn</a>
                 </p>
             </div>
-            <div class="resume-section" style="opacity: 0; transform: translateY(30px);">
-                <h2>EDUCATION</h2>
-                <div style="display: flex; justify-content: space-between;">
-                    <h3>University Of Petroleum And Energy Studies, Dehradun</h3>
-                    <p class="meta">2023-2027 (Expected)</p>
+            <div class="resume-timeline">
+                <div class="resume-item">
+                    <h2>EDUCATION</h2>
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>University Of Petroleum And Energy Studies, Dehradun</h3>
+                        <p class="meta">2023-2027 (Expected)</p>
+                    </div>
+                    <p>B.Tech Computer Science, Specialization in AI/ML</p>
                 </div>
-                <p>B.Tech Computer Science, Specialization in AI/ML</p>
-            </div>
-            <div class="resume-section" style="opacity: 0; transform: translateY(30px);">
-                <h2>TECHNICAL SKILLS</h2>
-                ${Object.entries(SKILLS_DATA).map(([category, list]) => `
-                    <p><strong>${category}:</strong> ${list}</p>
-                `).join('')}
+                <div class="resume-item">
+                    <h2>TECHNICAL SKILLS</h2>
+                    ${Object.entries(SKILLS_DATA).map(([category, list]) => `
+                        <p><strong>${category}:</strong> ${list}</p>
+                    `).join('')}
+                </div>
+                <div class="resume-item">
+                    <h2>ACHIEVEMENTS</h2>
+                    <p>• Developed 9+ projects spanning AI/ML, web development, and software engineering</p>
+                    <p>• Active contributor to open-source communities</p>
+                    <p>• Specialized in Generative AI and Natural Language Processing</p>
+                </div>
             </div>
         `;
         
-        // Animate sections in sequence
-        const sections = container.querySelectorAll('[style*="opacity: 0"]');
-        sections.forEach((section, index) => {
-            setTimeout(() => {
-                section.style.transition = 'all 0.6s ease';
-                section.style.opacity = '1';
-                section.style.transform = 'translateY(0)';
-            }, index * 200);
-        });
+        // Animate header first
+        setTimeout(() => {
+            const header = container.querySelector('.resume-header');
+            header.style.transition = 'all 0.6s ease';
+            header.style.opacity = '1';
+            header.style.transform = 'translateY(0)';
+        }, 100);
     }
 
     // --- Plexus Background Animation ---
