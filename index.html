@@ -130,6 +130,63 @@
         .description {
             font-size: 1.3rem;
             color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .quick-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .stat-item:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* --- Terminal Section --- */
@@ -429,17 +486,7 @@
         }
         .typing-effect {
             overflow: hidden;
-            border-right: 3px solid var(--primary-green);
             white-space: nowrap;
-            animation: typing 3s steps(30) forwards, blink-cursor 1s step-end infinite;
-        }
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        @keyframes blink-cursor {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--primary-green); }
         }
         .command-suggestion {
             position: absolute;
@@ -475,6 +522,13 @@
                 align-items: center;
                 text-align: center;
             }
+            .quick-stats {
+                gap: 1rem;
+            }
+            .stat-item {
+                padding: 0.5rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -489,6 +543,26 @@
         <header class="header">
             <h1 class="name glitch-text">Aarohi Mathur</h1>
             <p class="description typing-effect">Aspiring AI Engineer | Building, Learning, Innovating</p>
+            
+            <div class="quick-stats">
+                <div class="stat-item" onclick="showPage('projects')">
+                    <div class="stat-number">9+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item" onclick="showPage('skills')">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+                <div class="stat-item" onclick="showPage('resume')">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">Years Learning</div>
+                </div>
+            </div>
+            
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>Available for opportunities</span>
+            </div>
         </header>
 
         <section class="terminal-section">
@@ -511,6 +585,10 @@
                 </div>
             </div>
         </section>
+        
+        <footer class="footer">
+            <p>&copy; 2025 Aarohi Mathur. Built with passion, code, and terminal aesthetics.</p>
+        </footer>
     </div>
 
     <div id="page-about" class="page-content">
@@ -784,14 +862,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isVisible = ambiance.style.opacity !== '0';
                 ambiance.style.opacity = isVisible ? '0' : '1';
                 appendLine(`Terminal ambiance ${isVisible ? 'disabled' : 'enabled'}`, 'info');
-            }
-        },
-        'easter': {
-            description: "🥚 Hidden command",
-            action: async () => {
-                await appendLine("🎉 You found the Easter egg!", 'info');
-                await appendLine("Fun fact: This portfolio was built with passion, coffee, and lots of debugging!", 'info');
-                await appendLine("Keep exploring - there might be more surprises! 🚀", 'info');
             }
         }
     };
@@ -1099,17 +1169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialize Everything ---
     initTerminal();
     initPlexus();
-    
-    // Add typing effect to description after intro
-    setTimeout(() => {
-        const description = document.querySelector('.description');
-        if (description && description.classList.contains('typing-effect')) {
-            const originalText = description.textContent;
-            description.textContent = '';
-            description.style.borderRight = '3px solid var(--primary-green)';
-            typewriterEffect(description, originalText, 100);
-        }
-    }, 5000);
     
     // Set up back buttons
     document.querySelectorAll('.back-button').forEach(btn => {
