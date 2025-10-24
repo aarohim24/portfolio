@@ -245,16 +245,6 @@
         .input-line {
             position: relative;
         }
-        .cursor-glow {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 2px;
-            height: 1.2rem;
-            background: var(--primary-green);
-            animation: blink 1s infinite;
-            box-shadow: 0 0 10px var(--primary-green);
-        }
 
         /* --- Page Content Styling --- */
         .page-header {
@@ -416,12 +406,11 @@
             80% { transform: translate(2px, 2px); }
             90% { transform: translate(-2px, 2px); }
         }
-        @keyframes matrix {
-            0% { opacity: 0; transform: translateY(-20px); }
+        @keyframes terminalFlicker {
+            0%, 100% { opacity: 0.95; }
             50% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(20px); }
         }
-        .matrix-rain {
+        .terminal-ambiance {
             position: fixed;
             top: 0;
             left: 0;
@@ -429,15 +418,8 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
-            overflow: hidden;
-        }
-        .matrix-char {
-            position: absolute;
-            color: var(--primary-green);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            opacity: 0.3;
-            animation: matrix 3s linear infinite;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.01) 0%, transparent 70%);
+            animation: terminalFlicker 4s ease-in-out infinite;
         }
         .glitch-text {
             position: relative;
@@ -493,12 +475,11 @@
                 align-items: center;
                 text-align: center;
             }
-        }
     </style>
 </head>
 <body>
     <canvas id="plexus-canvas"></canvas>
-    <div class="matrix-rain" id="matrix-rain"></div>
+    <div class="terminal-ambiance"></div>
 
     <div class="intro">
         <div class="intro-text">AAROHI<br>MATHUR</div>
@@ -525,7 +506,6 @@
                     <div class="input-line">
                         <span class="prompt">$&nbsp;</span>
                         <input type="text" id="command-input" autocomplete="off" autofocus>
-                        <div class="cursor-glow"></div>
                         <div class="command-suggestion" id="command-suggestion"></div>
                     </div>
                 </div>
@@ -665,26 +645,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
     // --- Advanced Animation Functions ---
-    function createMatrixRain() {
-        const matrixContainer = document.getElementById('matrix-rain');
-        const chars = '01アカサタナハマヤラワンABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                const char = document.createElement('div');
-                char.className = 'matrix-char';
-                char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
-                char.style.left = Math.random() * 100 + '%';
-                char.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                matrixContainer.appendChild(char);
-                
-                setTimeout(() => {
-                    char.remove();
-                }, 4000);
-            }
-        }, 100);
-    }
-
     function typewriterEffect(element, text, speed = 50) {
         element.textContent = '';
         let i = 0;
@@ -710,25 +670,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             suggestion.classList.remove('show');
         }
-    }
-
-    function simulateTyping(text, callback) {
-        let index = 0;
-        const speed = 30;
-        const element = document.createElement('span');
-        element.className = 'command typing-simulation';
-        
-        const timer = setInterval(() => {
-            if (index < text.length) {
-                element.textContent += text[index];
-                index++;
-            } else {
-                clearInterval(timer);
-                if (callback) callback();
-            }
-        }, speed);
-        
-        return element;
     }
 
     // --- Utility Functions ---
@@ -762,20 +703,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Terminal Initialization ---
     function initTerminal() {
         output.innerHTML = '';
-        
-        // Animated welcome sequence
-        setTimeout(() => appendLine("System initializing...", 'info loading'), 500);
-        setTimeout(() => appendLine("Loading portfolio modules...", 'info loading'), 1500);
-        setTimeout(() => appendLine("✓ Authentication successful", 'info'), 2500);
-        setTimeout(() => appendLine("✓ Neural networks online", 'info'), 3000);
-        setTimeout(() => appendLine("✓ Ready for input", 'info'), 3500);
-        setTimeout(() => {
-            appendLine("", 'line');
-            appendLine("Welcome to Aarohi Mathur's Portfolio Terminal v2.1", 'info');
-            appendLine("Type 'help' to explore available commands", 'info');
-            appendLine("Pro tip: Use Tab for command completion", 'info');
-        }, 4000);
-        
+        appendLine("Welcome to my portfolio.", 'info');
+        appendLine("Type 'help' to see available commands", 'info');
         input.focus();
     }
 
@@ -849,12 +778,12 @@ document.addEventListener('DOMContentLoaded', () => {
             action: () => appendLine(new Date().toLocaleString(), 'info') 
         },
         'matrix': {
-            description: "Toggle matrix rain effect",
+            description: "Toggle terminal ambiance effect",
             action: () => {
-                const matrix = document.getElementById('matrix-rain');
-                const isVisible = matrix.style.opacity !== '0';
-                matrix.style.opacity = isVisible ? '0' : '1';
-                appendLine(`Matrix rain ${isVisible ? 'disabled' : 'enabled'}`, 'info');
+                const ambiance = document.querySelector('.terminal-ambiance');
+                const isVisible = ambiance.style.opacity !== '0';
+                ambiance.style.opacity = isVisible ? '0' : '1';
+                appendLine(`Terminal ambiance ${isVisible ? 'disabled' : 'enabled'}`, 'info');
             }
         },
         'easter': {
@@ -1170,7 +1099,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialize Everything ---
     initTerminal();
     initPlexus();
-    createMatrixRain();
     
     // Add typing effect to description after intro
     setTimeout(() => {
