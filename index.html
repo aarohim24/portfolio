@@ -139,29 +139,98 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .terminal-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            animation: scan 3s linear infinite;
+        }
+        .terminal-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
+            border-color: var(--primary-green);
         }
         .terminal-header {
             background: #1e1e1e;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .dot.red { background: #ff5f57; animation-delay: 0s; }
+        .dot.yellow { background: #ffbd2e; animation-delay: 0.3s; }
+        .dot.green { background: #28ca42; animation-delay: 0.6s; }
+        .terminal-title {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
         }
         .terminal {
             padding: 2rem;
             font-family: 'JetBrains Mono', monospace;
             color: var(--primary-green);
             min-height: 400px;
+            position: relative;
         }
         .terminal-output {
             margin-bottom: 1.5rem;
             overflow-y: auto;
             max-height: 300px;
         }
-        .line { white-space: pre-wrap; word-wrap: break-word; }
-        .prompt { color: var(--primary-green); }
-        .command { color: var(--text-primary); }
+        .line { 
+            white-space: pre-wrap; 
+            word-wrap: break-word;
+            animation: fadeInUp 0.3s ease-out;
+        }
+        .prompt { 
+            color: var(--primary-green);
+            position: relative;
+        }
+        .prompt::before {
+            content: '▶';
+            margin-right: 0.5rem;
+            animation: blink 1.5s infinite;
+        }
+        .command { 
+            color: var(--text-primary);
+            display: inline-block;
+            animation: typewriter 0.5s steps(20) forwards;
+        }
         .error { color: var(--error-color); }
-        .info { color: var(--accent-blue); }
+        .info { 
+            color: var(--accent-blue);
+            position: relative;
+        }
+        .info.loading::after {
+            content: '';
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            margin-left: 0.5rem;
+            border: 2px solid var(--accent-blue);
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
         #command-input {
             background: transparent;
             border: none;
@@ -171,6 +240,20 @@
             outline: none;
             width: 100%;
             caret-color: var(--primary-green);
+            position: relative;
+        }
+        .input-line {
+            position: relative;
+        }
+        .cursor-glow {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 2px;
+            height: 1.2rem;
+            background: var(--primary-green);
+            animation: blink 1s infinite;
+            box-shadow: 0 0 10px var(--primary-green);
         }
 
         /* --- Page Content Styling --- */
@@ -296,6 +379,105 @@
          }
 
 
+        /* --- Advanced Animations --- */
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(2px, -2px); }
+            30% { transform: translate(-2px, -2px); }
+            40% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, 2px); }
+            60% { transform: translate(2px, -2px); }
+            70% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            90% { transform: translate(-2px, 2px); }
+        }
+        @keyframes matrix {
+            0% { opacity: 0; transform: translateY(-20px); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .matrix-char {
+            position: absolute;
+            color: var(--primary-green);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            opacity: 0.3;
+            animation: matrix 3s linear infinite;
+        }
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text:hover {
+            animation: glitch 0.3s;
+        }
+        .typing-effect {
+            overflow: hidden;
+            border-right: 3px solid var(--primary-green);
+            white-space: nowrap;
+            animation: typing 3s steps(30) forwards, blink-cursor 1s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary-green); }
+        }
+        .command-suggestion {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .command-suggestion.show {
+            opacity: 1;
+            transform: translateY(0);
         /* Responsive */
         @media (max-width: 768px) {
             .intro-text { font-size: 3rem; }
@@ -316,6 +498,7 @@
 </head>
 <body>
     <canvas id="plexus-canvas"></canvas>
+    <div class="matrix-rain" id="matrix-rain"></div>
 
     <div class="intro">
         <div class="intro-text">AAROHI<br>MATHUR</div>
@@ -323,18 +506,27 @@
 
     <div class="main-container" id="main-container">
         <header class="header">
-            <h1 class="name">Aarohi Mathur</h1>
-            <p class="description">Aspiring AI Engineer | Building, Learning, Innovating</p>
+            <h1 class="name glitch-text">Aarohi Mathur</h1>
+            <p class="description typing-effect">Aspiring AI Engineer | Building, Learning, Innovating</p>
         </header>
 
         <section class="terminal-section">
             <div class="terminal-container">
-                <div class="terminal-header">aarohi@portfolio:~$</div>
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="terminal-title">aarohi@portfolio:~$</div>
+                </div>
                 <div class="terminal" onclick="document.getElementById('command-input').focus()">
                     <div class="terminal-output" id="output"></div>
                     <div class="input-line">
                         <span class="prompt">$&nbsp;</span>
                         <input type="text" id="command-input" autocomplete="off" autofocus>
+                        <div class="cursor-glow"></div>
+                        <div class="command-suggestion" id="command-suggestion"></div>
                     </div>
                 </div>
             </div>
@@ -472,21 +664,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ];
 
+    // --- Advanced Animation Functions ---
+    function createMatrixRain() {
+        const matrixContainer = document.getElementById('matrix-rain');
+        const chars = '01アカサタナハマヤラワンABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                matrixContainer.appendChild(char);
+                
+                setTimeout(() => {
+                    char.remove();
+                }, 4000);
+            }
+        }, 100);
+    }
+
+    function typewriterEffect(element, text, speed = 50) {
+        element.textContent = '';
+        let i = 0;
+        const timer = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(timer);
+            }
+        }, speed);
+    }
+
+    function showCommandSuggestion(input) {
+        const suggestion = document.getElementById('command-suggestion');
+        const value = input.toLowerCase();
+        const commandNames = Object.keys(commands);
+        const match = commandNames.find(cmd => cmd.startsWith(value) && cmd !== value);
+        
+        if (match && value.length > 0) {
+            suggestion.textContent = `Tab to complete: ${match}`;
+            suggestion.classList.add('show');
+        } else {
+            suggestion.classList.remove('show');
+        }
+    }
+
+    function simulateTyping(text, callback) {
+        let index = 0;
+        const speed = 30;
+        const element = document.createElement('span');
+        element.className = 'command typing-simulation';
+        
+        const timer = setInterval(() => {
+            if (index < text.length) {
+                element.textContent += text[index];
+                index++;
+            } else {
+                clearInterval(timer);
+                if (callback) callback();
+            }
+        }, speed);
+        
+        return element;
+    }
+
     // --- Utility Functions ---
     function appendLine(text, className = 'line') {
         if (!output) {
             console.error("Output element not found!");
             return;
         }
-        output.innerHTML += `<div class="${className}">${text}</div>`;
+        
+        const line = document.createElement('div');
+        line.className = className;
+        
+        if (className === 'command') {
+            // Add typing simulation for commands
+            typewriterEffect(line, text, 30);
+        } else if (className === 'info' && text.includes('Loading')) {
+            line.innerHTML = text;
+            line.classList.add('loading');
+            setTimeout(() => line.classList.remove('loading'), 2000);
+        } else {
+            line.textContent = text;
+        }
+        
+        output.appendChild(line);
         output.scrollTop = output.scrollHeight;
+        
+        // Add some terminal-like delay
+        return new Promise(resolve => setTimeout(resolve, 100));
     }
 
     // --- Terminal Initialization ---
     function initTerminal() {
         output.innerHTML = '';
-        appendLine("Welcome to Aarohi Mathur's Portfolio.", 'info');
-        appendLine("Type 'help' to see available commands", 'info');
+        
+        // Animated welcome sequence
+        setTimeout(() => appendLine("System initializing...", 'info loading'), 500);
+        setTimeout(() => appendLine("Loading portfolio modules...", 'info loading'), 1500);
+        setTimeout(() => appendLine("✓ Authentication successful", 'info'), 2500);
+        setTimeout(() => appendLine("✓ Neural networks online", 'info'), 3000);
+        setTimeout(() => appendLine("✓ Ready for input", 'info'), 3500);
+        setTimeout(() => {
+            appendLine("", 'line');
+            appendLine("Welcome to Aarohi Mathur's Portfolio Terminal v2.1", 'info');
+            appendLine("Type 'help' to explore available commands", 'info');
+            appendLine("Pro tip: Use Tab for command completion", 'info');
+        }, 4000);
+        
         input.focus();
     }
 
@@ -494,115 +783,288 @@ document.addEventListener('DOMContentLoaded', () => {
     const commands = {
         'help': {
             description: "Shows this list of commands",
-            action: () => {
-                appendLine("Available commands:", 'info');
-                Object.entries(commands).forEach(([cmd, details]) => {
-                    appendLine(`${cmd.padEnd(10)} - ${details.description}`, 'info');
-                });
+            action: async () => {
+                await appendLine("Available commands:", 'info');
+                await appendLine("", 'line');
+                for (const [cmd, details] of Object.entries(commands)) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    await appendLine(`  ${cmd.padEnd(12)} → ${details.description}`, 'info');
+                }
+                await appendLine("", 'line');
+                await appendLine("💡 Tip: Commands are case-sensitive. Try 'about' to get started!", 'info');
             }
         },
-        'about': { description: "About me page", action: () => showPage('about') },
-        'skills': { description: "Show technical skills", action: () => showPage('skills') },
-        'projects': { description: "Show my projects", action: () => showPage('projects') },
-        'resume': { description: "Show my resume", action: () => showPage('resume') },
-        'contact': { description: "Contact information", action: () => showPage('contact') },
-        'clear': { description: "Clear the terminal", action: () => output.innerHTML = '' },
-        'whoami': { description: "Show current user", action: () => appendLine("aarohi@portfolio", 'info') },
-        'date': { description: "Show current date", action: () => appendLine(new Date().toLocaleString(), 'info') }
+        'about': { 
+            description: "About me page", 
+            action: async () => {
+                await appendLine("Loading about section...", 'info loading');
+                setTimeout(() => showPage('about'), 1000);
+            }
+        },
+        'skills': { 
+            description: "Show technical skills", 
+            action: async () => {
+                await appendLine("Compiling skills database...", 'info loading');
+                setTimeout(() => showPage('skills'), 1000);
+            }
+        },
+        'projects': { 
+            description: "Show my projects", 
+            action: async () => {
+                await appendLine("Fetching project repositories...", 'info loading');
+                setTimeout(() => showPage('projects'), 1000);
+            }
+        },
+        'resume': { 
+            description: "Show my resume", 
+            action: async () => {
+                await appendLine("Generating resume view...", 'info loading');
+                setTimeout(() => showPage('resume'), 1000);
+            }
+        },
+        'contact': { 
+            description: "Contact information", 
+            action: async () => {
+                await appendLine("Retrieving contact information...", 'info loading');
+                setTimeout(() => showPage('contact'), 1000);
+            }
+        },
+        'clear': { 
+            description: "Clear the terminal", 
+            action: () => {
+                output.innerHTML = '';
+                appendLine("Terminal cleared. Welcome back!", 'info');
+            }
+        },
+        'whoami': { 
+            description: "Show current user", 
+            action: async () => {
+                await appendLine("aarohi@portfolio-v2.1", 'info');
+                await appendLine("Role: AI Engineer & Full-Stack Developer", 'info');
+                await appendLine("Status: Online and ready to collaborate", 'info');
+            }
+        },
+        'date': { 
+            description: "Show current date", 
+            action: () => appendLine(new Date().toLocaleString(), 'info') 
+        },
+        'matrix': {
+            description: "Toggle matrix rain effect",
+            action: () => {
+                const matrix = document.getElementById('matrix-rain');
+                const isVisible = matrix.style.opacity !== '0';
+                matrix.style.opacity = isVisible ? '0' : '1';
+                appendLine(`Matrix rain ${isVisible ? 'disabled' : 'enabled'}`, 'info');
+            }
+        },
+        'easter': {
+            description: "🥚 Hidden command",
+            action: async () => {
+                await appendLine("🎉 You found the Easter egg!", 'info');
+                await appendLine("Fun fact: This portfolio was built with passion, coffee, and lots of debugging!", 'info');
+                await appendLine("Keep exploring - there might be more surprises! 🚀", 'info');
+            }
+        }
     };
 
-    input.addEventListener('keydown', (e) => {
-        if (e.key !== 'Enter') return;
+    input.addEventListener('keydown', async (e) => {
+        const suggestion = document.getElementById('command-suggestion');
+        
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const value = input.value.toLowerCase();
+            const commandNames = Object.keys(commands);
+            const match = commandNames.find(cmd => cmd.startsWith(value));
+            if (match) {
+                input.value = match;
+                suggestion.classList.remove('show');
+            }
+            return;
+        }
+        
+        if (e.key !== 'Enter') {
+            showCommandSuggestion(input.value + e.key);
+            return;
+        }
         
         const commandText = input.value.trim().toLowerCase();
         if (commandText === '') return;
 
-        appendLine(`$ ${commandText}`, 'command');
+        suggestion.classList.remove('show');
+        await appendLine(`$ ${commandText}`, 'command');
 
         if (commands[commandText]) {
-            commands[commandText].action();
+            await commands[commandText].action();
         } else {
-            appendLine(`Command not found: ${commandText}. Type 'help' for options.`, 'error');
+            await appendLine(`Command not found: ${commandText}`, 'error');
+            await appendLine("Type 'help' to see available commands", 'info');
+            
+            // Suggest similar commands
+            const similar = Object.keys(commands).filter(cmd => 
+                cmd.includes(commandText) || commandText.includes(cmd)
+            );
+            if (similar.length > 0) {
+                await appendLine(`Did you mean: ${similar.join(', ')}?`, 'info');
+            }
         }
 
         input.value = '';
     });
 
+    // Add input event for real-time suggestions
+    input.addEventListener('input', (e) => {
+        showCommandSuggestion(e.target.value);
+    });
+
     // --- Page Navigation ---
     function showPage(pageId) {
-        mainContainer.style.display = 'none';
-        document.querySelectorAll('.page-content').forEach(p => {
-            p.style.display = 'none';
-            p.style.opacity = '0';
-        });
+        // Add terminal shutdown effect
+        const terminalContainer = document.querySelector('.terminal-container');
+        terminalContainer.style.transform = 'scale(0.95)';
+        terminalContainer.style.opacity = '0.5';
         
-        const page = document.getElementById(`page-${pageId}`);
-        if (page) {
-            page.style.display = 'flex';
-            void page.offsetWidth;
-            page.style.opacity = '1';
+        setTimeout(() => {
+            mainContainer.style.display = 'none';
+            document.querySelectorAll('.page-content').forEach(p => {
+                p.style.display = 'none';
+                p.style.opacity = '0';
+            });
             
-            if (pageId === 'projects') renderProjects();
-            if (pageId === 'skills') renderSkills();
-            if (pageId === 'contact') renderContact();
-            if (pageId === 'resume') renderResume();
-        }
+            const page = document.getElementById(`page-${pageId}`);
+            if (page) {
+                page.style.display = 'flex';
+                void page.offsetWidth;
+                page.style.opacity = '1';
+                
+                // Add page-specific loading animations
+                const pageTitle = page.querySelector('.page-title');
+                if (pageTitle) {
+                    pageTitle.style.transform = 'translateX(-100px)';
+                    pageTitle.style.opacity = '0';
+                    setTimeout(() => {
+                        pageTitle.style.transition = 'all 0.6s ease';
+                        pageTitle.style.transform = 'translateX(0)';
+                        pageTitle.style.opacity = '1';
+                    }, 100);
+                }
+                
+                if (pageId === 'projects') renderProjects();
+                if (pageId === 'skills') renderSkills();
+                if (pageId === 'contact') renderContact();
+                if (pageId === 'resume') renderResume();
+            }
+        }, 300);
     }
 
     function showTerminal() {
         document.querySelectorAll('.page-content').forEach(p => {
-            p.style.display = 'none';
             p.style.opacity = '0';
+            setTimeout(() => {
+                p.style.display = 'none';
+            }, 300);
         });
-        mainContainer.style.display = 'flex';
-        void mainContainer.offsetWidth;
-        mainContainer.style.opacity = '1';
-        input.focus();
+        
+        setTimeout(() => {
+            mainContainer.style.display = 'flex';
+            const terminalContainer = document.querySelector('.terminal-container');
+            terminalContainer.style.transform = 'scale(1)';
+            terminalContainer.style.opacity = '1';
+            void mainContainer.offsetWidth;
+            mainContainer.style.opacity = '1';
+            input.focus();
+        }, 300);
     }
 
     // --- Content Rendering ---
     function renderProjects() {
         const container = document.getElementById('projects-container');
-        container.innerHTML = PROJECTS_DATA.map(proj => `
-            <div class="project-card">
-                <div class="project-card-header">
-                    <h3>${proj.title}</h3>
-                    <span class="date">${proj.date}</span>
-                </div>
-                <p>${proj.description}</p>
-                <div class="tech"><strong>Technologies:</strong> ${proj.tech}</div>
-                <div style="margin-top: 1rem;">
-                    <a href="${proj.githubLink}" target="_blank">View on GitHub</a>
-                </div>
-            </div>
-        `).join('');
+        container.innerHTML = '';
+        
+        PROJECTS_DATA.forEach((proj, index) => {
+            setTimeout(() => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.style.opacity = '0';
+                projectCard.style.transform = 'translateY(50px)';
+                
+                projectCard.innerHTML = `
+                    <div class="project-card-header">
+                        <h3>${proj.title}</h3>
+                        <span class="date">${proj.date}</span>
+                    </div>
+                    <p>${proj.description}</p>
+                    <div class="tech"><strong>Technologies:</strong> ${proj.tech}</div>
+                    <div style="margin-top: 1rem;">
+                        <a href="${proj.githubLink}" target="_blank">View on GitHub</a>
+                    </div>
+                `;
+                
+                container.appendChild(projectCard);
+                
+                // Animate in
+                setTimeout(() => {
+                    projectCard.style.transition = 'all 0.6s ease';
+                    projectCard.style.opacity = '1';
+                    projectCard.style.transform = 'translateY(0)';
+                }, 50);
+            }, index * 150);
+        });
     }
 
     function renderSkills() {
         const container = document.getElementById('skills-container');
-        container.innerHTML = Object.entries(SKILLS_DATA).map(([category, list]) => `
-            <h3 style="color: var(--primary-green); margin: 1.5rem 0 0.5rem;">${category}</h3>
-            <p>${list}</p>
-        `).join('');
+        container.innerHTML = '';
+        
+        let delay = 0;
+        Object.entries(SKILLS_DATA).forEach(([category, list]) => {
+            setTimeout(() => {
+                const skillSection = document.createElement('div');
+                skillSection.style.opacity = '0';
+                skillSection.style.transform = 'translateX(-50px)';
+                
+                skillSection.innerHTML = `
+                    <h3 style="color: var(--primary-green); margin: 1.5rem 0 0.5rem;">${category}</h3>
+                    <p>${list}</p>
+                `;
+                
+                container.appendChild(skillSection);
+                
+                setTimeout(() => {
+                    skillSection.style.transition = 'all 0.6s ease';
+                    skillSection.style.opacity = '1';
+                    skillSection.style.transform = 'translateX(0)';
+                }, 50);
+            }, delay);
+            delay += 200;
+        });
     }
 
     function renderContact() {
         const container = document.getElementById('contact-container');
         container.innerHTML = `
-            <p>Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities.</p>
-            <p style="margin-top: 2rem;">
-                <strong>Email:</strong> <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a><br>
-                <strong>Phone:</strong> <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a><br>
-                <strong>GitHub:</strong> <a href="${CONTACT_INFO.github}" target="_blank">${CONTACT_INFO.github}</a><br>
-                <strong>LinkedIn:</strong> <a href="${CONTACT_INFO.linkedIn}" target="_blank">${CONTACT_INFO.linkedIn}</a>
-            </p>
+            <div style="opacity: 0; transform: translateY(30px);">
+                <p>Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities.</p>
+                <p style="margin-top: 2rem;">
+                    <strong>Email:</strong> <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a><br>
+                    <strong>Phone:</strong> <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a><br>
+                    <strong>GitHub:</strong> <a href="${CONTACT_INFO.github}" target="_blank">${CONTACT_INFO.github}</a><br>
+                    <strong>LinkedIn:</strong> <a href="${CONTACT_INFO.linkedIn}" target="_blank">${CONTACT_INFO.linkedIn}</a>
+                </p>
+            </div>
         `;
+        
+        setTimeout(() => {
+            const content = container.firstElementChild;
+            content.style.transition = 'all 0.6s ease';
+            content.style.opacity = '1';
+            content.style.transform = 'translateY(0)';
+        }, 100);
     }
 
     function renderResume() {
         const container = document.getElementById('resume-container');
         container.innerHTML = `
-            <div class="resume-header">
+            <div class="resume-header" style="opacity: 0; transform: translateY(30px);">
                 <p>
                     <a href="mailto:${CONTACT_INFO.email}">${CONTACT_INFO.email}</a> | 
                     <a href="tel:${CONTACT_INFO.phone}">${CONTACT_INFO.phone}</a> | 
@@ -610,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${CONTACT_INFO.linkedIn}" target="_blank">LinkedIn</a>
                 </p>
             </div>
-            <div class="resume-section">
+            <div class="resume-section" style="opacity: 0; transform: translateY(30px);">
                 <h2>EDUCATION</h2>
                 <div style="display: flex; justify-content: space-between;">
                     <h3>University Of Petroleum And Energy Studies, Dehradun</h3>
@@ -618,13 +1080,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p>B.Tech Computer Science, Specialization in AI/ML</p>
             </div>
-            <div class="resume-section">
+            <div class="resume-section" style="opacity: 0; transform: translateY(30px);">
                 <h2>TECHNICAL SKILLS</h2>
                 ${Object.entries(SKILLS_DATA).map(([category, list]) => `
                     <p><strong>${category}:</strong> ${list}</p>
                 `).join('')}
             </div>
         `;
+        
+        // Animate sections in sequence
+        const sections = container.querySelectorAll('[style*="opacity: 0"]');
+        sections.forEach((section, index) => {
+            setTimeout(() => {
+                section.style.transition = 'all 0.6s ease';
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }, index * 200);
+        });
     }
 
     // --- Plexus Background Animation ---
@@ -698,6 +1170,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialize Everything ---
     initTerminal();
     initPlexus();
+    createMatrixRain();
+    
+    // Add typing effect to description after intro
+    setTimeout(() => {
+        const description = document.querySelector('.description');
+        if (description && description.classList.contains('typing-effect')) {
+            const originalText = description.textContent;
+            description.textContent = '';
+            description.style.borderRight = '3px solid var(--primary-green)';
+            typewriterEffect(description, originalText, 100);
+        }
+    }, 5000);
     
     // Set up back buttons
     document.querySelectorAll('.back-button').forEach(btn => {
@@ -707,6 +1191,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle window resize
     window.addEventListener('resize', () => {
         initPlexus();
+    });
+
+    // Add some keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'l') {
+            e.preventDefault();
+            if (mainContainer.style.display !== 'none') {
+                commands.clear.action();
+            }
+        }
+        if (e.key === 'Escape') {
+            if (mainContainer.style.display === 'none') {
+                showTerminal();
+            }
+        }
+    });
+
+    // Add focus effect to terminal
+    input.addEventListener('focus', () => {
+        document.querySelector('.terminal-container').style.borderColor = 'var(--primary-green)';
+    });
+    
+    input.addEventListener('blur', () => {
+        document.querySelector('.terminal-container').style.borderColor = 'var(--border-color)';
     });
 });
 </script>
