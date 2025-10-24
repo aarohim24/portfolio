@@ -132,36 +132,6 @@
             color: var(--text-secondary);
             margin-bottom: 1rem;
         }
-        .quick-stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .stat-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .stat-item:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-2px);
-        }
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
         .status-indicator {
             display: inline-flex;
             align-items: center;
@@ -522,12 +492,6 @@
                 align-items: center;
                 text-align: center;
             }
-            .quick-stats {
-                gap: 1rem;
-            }
-            .stat-item {
-                padding: 0.5rem 1rem;
-            }
         }
     </style>
 </head>
@@ -543,21 +507,6 @@
         <header class="header">
             <h1 class="name glitch-text">Aarohi Mathur</h1>
             <p class="description typing-effect">Aspiring AI Engineer | Building, Learning, Innovating</p>
-            
-            <div class="quick-stats">
-                <div class="stat-item" onclick="showPage('projects')">
-                    <div class="stat-number">9+</div>
-                    <div class="stat-label">Projects</div>
-                </div>
-                <div class="stat-item" onclick="showPage('skills')">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Technologies</div>
-                </div>
-                <div class="stat-item" onclick="showPage('resume')">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">Years Learning</div>
-                </div>
-            </div>
             
             <div class="status-indicator">
                 <div class="status-dot"></div>
@@ -587,7 +536,7 @@
         </section>
         
         <footer class="footer">
-            <p>&copy; 2025 Aarohi Mathur. Built with passion, code, and terminal aesthetics.</p>
+            <p>&copy; 2025 Aarohi Mathur</p>
         </footer>
     </div>
 
