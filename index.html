@@ -247,17 +247,6 @@
             color: var(--accent-blue);
             position: relative;
         }
-        .info.loading::after {
-            content: '';
-            display: inline-block;
-            width: 1rem;
-            height: 1rem;
-            margin-left: 0.5rem;
-            border: 2px solid var(--accent-blue);
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
         #command-input {
             background: transparent;
             border: none;
@@ -653,18 +642,6 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            10% { transform: translate(-2px, 2px); }
-            20% { transform: translate(2px, -2px); }
-            30% { transform: translate(-2px, -2px); }
-            40% { transform: translate(2px, 2px); }
-            50% { transform: translate(-2px, 2px); }
-            60% { transform: translate(2px, -2px); }
-            70% { transform: translate(-2px, -2px); }
-            80% { transform: translate(2px, 2px); }
-            90% { transform: translate(-2px, 2px); }
-        }
         @keyframes terminalFlicker {
             0%, 100% { opacity: 0.95; }
             50% { opacity: 1; }
@@ -679,12 +656,6 @@
             z-index: -1;
             background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.01) 0%, transparent 70%);
             animation: terminalFlicker 4s ease-in-out infinite;
-        }
-        .glitch-text {
-            position: relative;
-        }
-        .glitch-text:hover {
-            animation: glitch 0.3s;
         }
         .typing-effect {
             overflow: hidden;
@@ -737,7 +708,7 @@
 
     <div class="main-container" id="main-container">
         <header class="header">
-            <h1 class="name glitch-text">Aarohi Mathur</h1>
+            <h1 class="name">Aarohi Mathur</h1>
             <p class="description typing-effect">Aspiring AI Engineer | Building, Learning, Innovating</p>
             
             <div class="status-indicator">
@@ -844,72 +815,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const PROJECTS_DATA = [
-        {
-            title: "YouTube Video Summarizer",
-            date: "June 2025",
-            description: "Built a Streamlit app to download, transcribe, and summarize YouTube videos using GPT-4 and Whisper, reducing manual effort by ~90%.",
-            tech: "Python, Streamlit, GPT-4, Whisper, yt-dlp, FFmpeg",
-            githubLink: "https://github.com/aarohim24/Youtube-Video-Summarizer"
-        },
-        
- {
-                title: "Online Shopper Behavior Analysis",
-                date: "Feb 2025",
-                description: "Analyzed 1,000+ e-commerce sessions with K-Means and built a Random Forest classifier (~90% accuracy) with sentiment analysis.",
-                tech: "Python, Scikit-learn, Pandas, Plotly, Hugging Face",
-                githubLink: "https://github.com/aarohim24/Online-Shopper-Behavior-Analysis"
-            },
-            {
-                title: "Cell Image Classification Using CNNs",
-                date: "Dec 2024",
-                description: "Trained a CNN to classify 12,000+ blood cell images into 4 categories with 90% validation accuracy using TensorFlow/Keras.",
-                tech: "Python, TensorFlow/Keras, NumPy, Google Colab",
-                githubLink: "https://github.com/aarohim24/Cell-Image-Classification"
-            },
-            {
-                title: "TimeWarp - Digital Time Tracker",
-                date: "Nov 2024",
-                description: "Developed a Flask-based desktop activity tracker with real-time SQLite logging and Matplotlib visualizations to boost productivity tracking.",
-                tech: "Python, Flask, SQLite, Pandas, Matplotlib, HTML/CSS",
-                githubLink: "https://github.com/aarohim24/TimeWarp-Digital-Time-Tracker"
-            },
-            {
-                title: "Student Housing Management System",
-                date: " March 2025",
-                description: "A full-stack Java application using Swing and MySQL for managing student housing, featuring user/admin roles and a complete booking flow.",
-                tech: "Java, Swing, MySQL",
-                githubLink: "https://github.com/aarohim24/Property-Rental-System"
-            },
-            {
-                title: "Electricity Bill Calculator",
-                date: "Dec 2025",
-                description: "A Java Swing GUI application that calculates monthly electricity bills based on tiered-rate slabs and validates user input.",
-                tech: "Java, Swing",
-                githubLink: "https://github.com/aarohim24/Electricity-Bill-Generator-Java-OOP-"
-            },
-            {
-                title: "Short Notes Generator",
-                date: "Feb 2024",
-                description: "A C++ command-line tool that uses OpenAI's GPT API to generate concise, revision-friendly summaries from PDF and DOCX files.",
-                tech: "C++, Generative AI (OpenAI), libcurl",
-                githubLink: "https://github.com/aarohim24/NotesGenerator"
-            },
-            {
-                title: "2048 Game",
-                date: "Nov 2023",
-                description: "The classic 2048 game built in C for the command line, featuring dynamic tile generation, merging mechanics, and win/loss detection.",
-                tech: "C, Standard Libraries",
-                githubLink: "https://github.com/aarohim24/2048Game"
-            },
-            {
-                title: "Typing Speed Test",
-                date: "Oct 2023",
-                description: "A Python tool built with Tkinter that measures typing speed (WPM) and accuracy in real-time, visualizing performance with Matplotlib.",
-                tech: "Python, Tkinter, Matplotlib",
-                githubLink: "https://github.com/aarohim24/Typing-Speed-Calculator-Python"
-            }
-
-        ];
+        // Projects will be added here
+        // Please provide the project data you'd like to include
+    ];
 
     // --- Advanced Animation Functions ---
     function typewriterEffect(element, text, speed = 50) {
@@ -952,10 +860,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (className === 'command') {
             // Add typing simulation for commands
             typewriterEffect(line, text, 30);
-        } else if (className === 'info' && text.includes('Loading')) {
-            line.innerHTML = text;
-            line.classList.add('loading');
-            setTimeout(() => line.classList.remove('loading'), 2000);
         } else {
             line.textContent = text;
         }
@@ -993,36 +897,31 @@ document.addEventListener('DOMContentLoaded', () => {
         'about': { 
             description: "About me page", 
             action: async () => {
-                await appendLine("Loading about section...", 'info loading');
-                setTimeout(() => showPage('about'), 1000);
+                showPage('about');
             }
         },
         'skills': { 
             description: "Show technical skills", 
             action: async () => {
-                await appendLine("Compiling skills database...", 'info loading');
-                setTimeout(() => showPage('skills'), 1000);
+                showPage('skills');
             }
         },
         'projects': { 
             description: "Show my projects", 
             action: async () => {
-                await appendLine("Fetching project repositories...", 'info loading');
-                setTimeout(() => showPage('projects'), 1000);
+                showPage('projects');
             }
         },
         'resume': { 
             description: "Show my resume", 
             action: async () => {
-                await appendLine("Generating resume view...", 'info loading');
-                setTimeout(() => showPage('resume'), 1000);
+                showPage('resume');
             }
         },
         'contact': { 
             description: "Contact information", 
             action: async () => {
-                await appendLine("Retrieving contact information...", 'info loading');
-                setTimeout(() => showPage('contact'), 1000);
+                showPage('contact');
             }
         },
         'clear': { 
