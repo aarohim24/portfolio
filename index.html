@@ -791,27 +791,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 output.innerHTML = '';
                 appendLine("Terminal cleared. Welcome back!", 'info');
             }
-        },
-        'whoami': { 
-            description: "Show current user", 
-            action: async () => {
-                await appendLine("aarohi@portfolio-v2.1", 'info');
-                await appendLine("Role: AI Engineer & Full-Stack Developer", 'info');
-                await appendLine("Status: Online and ready to collaborate", 'info');
-            }
-        },
-        'date': { 
-            description: "Show current date", 
-            action: () => appendLine(new Date().toLocaleString(), 'info') 
-        },
-        'matrix': {
-            description: "Toggle terminal ambiance effect",
-            action: () => {
-                const ambiance = document.querySelector('.terminal-ambiance');
-                const isVisible = ambiance.style.opacity !== '0';
-                ambiance.style.opacity = isVisible ? '0' : '1';
-                appendLine(`Terminal ambiance ${isVisible ? 'disabled' : 'enabled'}`, 'info');
-            }
         }
     };
 
