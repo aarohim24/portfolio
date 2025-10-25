@@ -13,6 +13,8 @@
             --primary-green: #00ff88;
             --secondary-green: #00cc6a;
             --accent-blue: #4ecdc4;
+            --accent-pink: #ff69b4;
+            --accent-purple: #a78bfa;
             --dark-bg: #0a0a0a;
             --card-bg: #111111;
             --border-color: #333333;
@@ -20,6 +22,10 @@
             --text-secondary: #cccccc;
             --text-muted: #888888;
             --error-color: #ff6b6b;
+            --circuit-green: #00ff88;
+            --holographic-1: #00ffff;
+            --holographic-2: #ff00ff;
+            --holographic-3: #ffff00;
         }
 
         body {
@@ -28,6 +34,46 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Circuit Board Pattern Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0, 255, 136, 0.03) 50px, rgba(0, 255, 136, 0.03) 51px),
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(0, 255, 136, 0.03) 50px, rgba(0, 255, 136, 0.03) 51px),
+                radial-gradient(circle at 20% 30%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
+            z-index: -2;
+            opacity: 0.6;
+        }
+        
+        /* Animated Grid Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(100px); }
         }
 
         /* --- Advanced Plexus Background --- */
@@ -38,7 +84,8 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0.4;
+            mix-blend-mode: screen;
         }
 
         /* --- Netflix-style intro --- */
@@ -123,9 +170,34 @@
             font-size: 4rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-primary), var(--primary-green));
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-green), var(--accent-pink), var(--accent-blue));
+            background-size: 300% 300%;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: holographicShift 8s ease infinite;
+            position: relative;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+        
+        @keyframes holographicShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .name::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--holographic-1), var(--holographic-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.3;
+            filter: blur(2px);
         }
         .description {
             font-size: 1.3rem;
@@ -136,19 +208,44 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg), rgba(17, 17, 17, 0.8));
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 0.5rem 1rem;
             font-size: 0.9rem;
             font-family: 'JetBrains Mono', monospace;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.2),
+                inset 0 0 10px rgba(0, 255, 136, 0.05);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .status-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+            animation: statusScan 3s linear infinite;
+        }
+        
+        @keyframes statusScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
         .status-dot {
             width: 8px;
             height: 8px;
             background: var(--primary-green);
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--primary-green);
+            position: relative;
+            z-index: 1;
         }
         .footer {
             text-align: center;
@@ -164,34 +261,95 @@
             background: var(--card-bg);
             border-radius: 16px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 0 30px rgba(0, 255, 136, 0.05),
+                0 0 50px rgba(0, 255, 136, 0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
+        
+        /* Circuit trace animation */
         .terminal-container::before {
             content: '';
             position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                var(--circuit-green), 
+                var(--accent-pink), 
+                var(--accent-blue), 
+                var(--accent-purple),
+                var(--circuit-green));
+            background-size: 400% 400%;
+            border-radius: 16px;
+            z-index: -1;
+            animation: circuitFlow 8s ease infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .terminal-container:hover::before {
+            opacity: 0.5;
+        }
+        
+        @keyframes circuitFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Wireframe overlay */
+        .terminal-container::after {
+            content: '';
+            position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-            animation: scan 3s linear infinite;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 136, 0.03) 2px, rgba(0, 255, 136, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 255, 136, 0.03) 2px, rgba(0, 255, 136, 0.03) 4px);
+            pointer-events: none;
+            opacity: 0.5;
         }
         .terminal-container:hover {
             transform: translateY(-2px);
-            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
+            box-shadow: 
+                0 25px 50px rgba(0, 255, 136, 0.2),
+                inset 0 0 40px rgba(0, 255, 136, 0.1),
+                0 0 80px rgba(255, 105, 180, 0.2);
             border-color: var(--primary-green);
         }
         .terminal-header {
-            background: #1e1e1e;
+            background: linear-gradient(135deg, #1e1e1e 0%, #0a0a0a 100%);
             padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-muted);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Scanline effect */
+        .terminal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--circuit-green), transparent);
+            animation: scanline 3s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         .terminal-dots {
             display: flex;
@@ -202,10 +360,37 @@
             height: 12px;
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px currentColor;
+            position: relative;
         }
-        .dot.red { background: #ff5f57; animation-delay: 0s; }
-        .dot.yellow { background: #ffbd2e; animation-delay: 0.3s; }
-        .dot.green { background: #28ca42; animation-delay: 0.6s; }
+        .dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid currentColor;
+            opacity: 0;
+            animation: dotRipple 2s ease-in-out infinite;
+        }
+        @keyframes dotRipple {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .dot.red { 
+            background: #ff5f57; 
+            animation-delay: 0s; 
+            color: #ff5f57;
+        }
+        .dot.yellow { 
+            background: #ffbd2e; 
+            animation-delay: 0.3s; 
+            color: #ffbd2e;
+        }
+        .dot.green { 
+            background: #28ca42; 
+            animation-delay: 0.6s; 
+            color: #28ca42;
+        }
         .terminal-title {
             margin-left: auto;
             font-family: 'JetBrains Mono', monospace;
@@ -359,17 +544,21 @@
             position: relative;
         }
         .skill-category {
-            background: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(17, 17, 17, 0.8) 100%);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.5rem;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         .skill-category:hover {
             border-color: var(--primary-green);
             transform: translateY(-2px);
+            box-shadow: 
+                0 10px 30px rgba(0, 255, 136, 0.2),
+                inset 0 0 20px rgba(0, 255, 136, 0.05);
         }
         .skill-category::before {
             content: '';
@@ -377,9 +566,14 @@
             top: 0;
             left: -100%;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-green), transparent);
-            animation: skillScan 3s linear infinite;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--primary-green), 
+                var(--accent-pink),
+                var(--accent-blue),
+                transparent);
+            animation: skillScan 4s linear infinite;
             animation-delay: var(--delay, 0s);
         }
         .skill-category:nth-child(1) { --delay: 0s; }
@@ -413,29 +607,51 @@
             position: relative;
             overflow: hidden;
         }
+        
+        /* Holographic shimmer effect */
         .project-card::after {
             content: '';
             position: absolute;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 255, 255, 0.1) 40%,
+                rgba(255, 0, 255, 0.1) 50%,
+                rgba(0, 255, 136, 0.1) 60%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
             transition: all 0.8s ease;
+            opacity: 0;
         }
         .project-card:hover::after {
-            right: 100%;
+            opacity: 1;
+            animation: shimmer 2s linear infinite;
         }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
         .project-tech-bg {
             position: absolute;
             top: 50%;
             right: 10px;
             transform: translateY(-50%);
             font-size: 4rem;
-            color: var(--primary-green);
-            opacity: 0.05;
+            background: linear-gradient(45deg, var(--primary-green), var(--accent-pink), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.08;
             z-index: 0;
             animation: rotateCode 20s linear infinite;
+            filter: blur(1px);
         }
         @keyframes rotateCode {
             from { transform: translateY(-50%) rotate(0deg); }
@@ -453,21 +669,25 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(17, 17, 17, 0.8) 100%);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
         .contact-item:hover {
             border-color: var(--primary-green);
             transform: translateX(10px);
+            box-shadow: 
+                0 5px 20px rgba(0, 255, 136, 0.2),
+                inset 0 0 20px rgba(0, 255, 136, 0.05);
         }
         .contact-icon {
             width: 40px;
             height: 40px;
-            background: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -475,7 +695,27 @@
             font-family: 'JetBrains Mono', monospace;
             font-weight: bold;
             animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            position: relative;
         }
+        
+        /* Orbital ring effect */
+        .contact-icon::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2px solid var(--primary-green);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: orbit 3s linear infinite;
+        }
+        
+        @keyframes orbit {
+            0% { transform: rotate(0deg) scale(1); opacity: 0.3; }
+            50% { transform: rotate(180deg) scale(1.1); opacity: 0.1; }
+            100% { transform: rotate(360deg) scale(1); opacity: 0.3; }
+        }
+        
         .contact-item::before {
             content: '';
             position: absolute;
@@ -483,7 +723,7 @@
             top: 0;
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1));
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.15), rgba(255, 105, 180, 0.1));
             transition: width 0.5s ease;
         }
         .contact-item:hover::before {
@@ -546,17 +786,38 @@
             gap: 2rem;
         }
         .project-card {
-            background: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(17, 17, 17, 0.8) 100%);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
             transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
         }
+        
+        /* Circuit corner decorations */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: 
+                radial-gradient(circle at 0 100%, transparent 8px, var(--circuit-green) 8px, var(--circuit-green) 9px, transparent 9px),
+                radial-gradient(circle at 100% 0, transparent 8px, var(--accent-pink) 8px, var(--accent-pink) 9px, transparent 9px);
+            opacity: 0.2;
+            border-top-right-radius: 12px;
+        }
+        
         .project-card:hover {
             transform: translateY(-5px);
             border-color: var(--primary-green);
+            box-shadow: 
+                0 10px 40px rgba(0, 255, 136, 0.2),
+                inset 0 0 20px rgba(0, 255, 136, 0.05);
         }
         .project-card-header {
             display: flex;
@@ -564,7 +825,11 @@
             align-items: baseline;
             margin-bottom: 0.75rem;
         }
-        .project-card h3 { color: var(--primary-green); }
+        .project-card h3 { 
+            color: var(--primary-green); 
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            position: relative;
+        }
         .project-card .date { font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 0.9rem; }
         .project-card p {
             margin-bottom: 1rem;
@@ -653,9 +918,18 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
-            background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.01) 0%, transparent 70%);
+            z-index: 1000;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px
+                ),
+                radial-gradient(ellipse at center, transparent 0%, rgba(0, 255, 136, 0.02) 70%);
             animation: terminalFlicker 4s ease-in-out infinite;
+            mix-blend-mode: overlay;
         }
         .typing-effect {
             overflow: hidden;
@@ -708,7 +982,7 @@
 
     <div class="main-container" id="main-container">
         <header class="header">
-            <h1 class="name">Aarohi Mathur</h1>
+            <h1 class="name" data-text="AAROHI MATHUR">Aarohi Mathur</h1>
             <p class="description typing-effect">Aspiring AI Engineer | Building, Learning, Innovating</p>
             
             <div class="status-indicator">
@@ -1218,6 +1492,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let particles = [];
         const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
         const maxDistance = 120;
+        
+        // Holographic color palette
+        const colors = [
+            { r: 0, g: 255, b: 136 },    // Green
+            { r: 255, g: 105, b: 180 },  // Pink
+            { r: 78, g: 205, b: 196 },   // Blue
+            { r: 167, g: 139, b: 250 }   // Purple
+        ];
 
         class Particle {
             constructor() {
@@ -1225,19 +1507,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.y = Math.random() * canvas.height;
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = 2;
+                this.radius = Math.random() * 2 + 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.pulse = Math.random() * Math.PI * 2;
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
+                this.pulse += 0.02;
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
             draw() {
+                const opacity = 0.5 + Math.sin(this.pulse) * 0.3;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0, 255, 136, 0.8)';
+                ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${opacity})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.5)`;
                 ctx.fill();
+                ctx.shadowBlur = 0;
             }
         }
 
@@ -1249,8 +1538,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < maxDistance) {
+                        const opacity = (1 - distance / maxDistance) * 0.5;
+                        
+                        // Create gradient for the connection line
+                        const gradient = ctx.createLinearGradient(
+                            particles[i].x, particles[i].y,
+                            particles[j].x, particles[j].y
+                        );
+                        gradient.addColorStop(0, `rgba(${particles[i].color.r}, ${particles[i].color.g}, ${particles[i].color.b}, ${opacity})`);
+                        gradient.addColorStop(1, `rgba(${particles[j].color.r}, ${particles[j].color.g}, ${particles[j].color.b}, ${opacity})`);
+                        
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 255, 136, ${1 - distance / maxDistance})`;
+                        ctx.strokeStyle = gradient;
                         ctx.lineWidth = 1;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
