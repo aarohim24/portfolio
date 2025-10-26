@@ -185,19 +185,6 @@
             100% { background-position: 0% 50%; }
         }
         
-        .name::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 2px;
-            top: 2px;
-            z-index: -1;
-            background: linear-gradient(45deg, var(--holographic-1), var(--holographic-2));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0.3;
-            filter: blur(2px);
-        }
         .description {
             font-size: 1.3rem;
             color: var(--text-secondary);
@@ -266,36 +253,7 @@
             overflow: hidden;
         }
         
-        /* Circuit trace animation */
-        .terminal-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                var(--circuit-green), 
-                var(--accent-pink), 
-                var(--accent-blue), 
-                var(--accent-purple),
-                var(--circuit-green));
-            background-size: 400% 400%;
-            border-radius: 16px;
-            z-index: -1;
-            animation: circuitFlow 8s ease infinite;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .terminal-container:hover::before {
-            opacity: 0.5;
-        }
-        
-        @keyframes circuitFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
+
         
         /* Wireframe overlay */
         .terminal-container::after {
