@@ -10,9 +10,7 @@ interface Project {
   description: string
   tech: string[]
   link: string
-  img1: string
-  img2?: string
-  imgRight?: string
+  img: string
   accentColor: string
 }
 
@@ -26,9 +24,7 @@ const PROJECTS: Project[] = [
       'AI analytics platform — upload CSV up to 50MB, query in natural language, get 4 viz types and LLM-generated insights across 7 REST endpoints. 83% test coverage, Docker + GitHub Actions CI/CD.',
     tech: ['Python', 'FastAPI', 'NumPy', 'PostgreSQL', 'Docker'],
     link: 'https://autoinsight-peach.vercel.app/',
-    img1: '/portfolio/screenshots/autoinsight-1.png',
-    img2: '/portfolio/screenshots/autoinsight-2.png',
-    imgRight: '/portfolio/screenshots/autoinsight-3.png',
+    img: '/portfolio/screenshots/autoinsight-1.png',
     accentColor: '#4ade80',
   },
   {
@@ -40,9 +36,7 @@ const PROJECTS: Project[] = [
       'FAISS-indexed RAG pipeline grounding Llama 3.3 across 4 interview question types. Sub-5ms retrieval post warm-up. LLM-guided scoring (0–10 per answer). Deployed on Vercel + Railway.',
     tech: ['React', 'FastAPI', 'FAISS', 'Llama 3.3', 'Railway'],
     link: 'https://smartprep-ai-ten.vercel.app/',
-    img1: '/portfolio/screenshots/smartprep-1.png',
-    img2: '/portfolio/screenshots/smartprep-2.png',
-    imgRight: '/portfolio/screenshots/smartprep-3.png',
+    img: '/portfolio/screenshots/smartprep-1.png',
     accentColor: '#60a5fa',
   },
   {
@@ -54,9 +48,7 @@ const PROJECTS: Project[] = [
       '2,600+ active users · 33K interactions in 30 days (Google Analytics). 40+ food outlet listings with category filtering — serving students with local caterers unlisted on Swiggy/Zomato.',
     tech: ['HTML', 'CSS', 'JavaScript', 'Netlify'],
     link: 'https://foodie-spot.netlify.app/',
-    img1: '/portfolio/screenshots/foodspot-1.png',
-    img2: '/portfolio/screenshots/foodspot-2.png',
-    imgRight: '/portfolio/screenshots/foodspot-3.png',
+    img: '/portfolio/screenshots/foodspot-1.png',
     accentColor: '#f97316',
   },
   {
@@ -68,8 +60,7 @@ const PROJECTS: Project[] = [
       'Campus-wide PWA — marketplace, carpooling, alumni network. 300+ users onboarded in 24 hours, zero downtime. Multi-tenant PostgreSQL with Supabase RLS-enforced RBAC, GitHub Actions CI/CD.',
     tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
     link: 'https://github.com/aarohim24',
-    img1: '/portfolio/screenshots/social-1.png',
-    img2: '/portfolio/screenshots/social-2.png',
+    img: '/portfolio/screenshots/social-1.png',
     accentColor: '#a78bfa',
   },
 ]
@@ -90,7 +81,7 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
   const targetScale = 1 - (total - 1 - index) * 0.04
   const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale])
 
-  const isPlaceholder = !project.img1
+  const isPlaceholder = !project.img
 
   return (
     <div ref={containerRef} style={{ height: '85vh' }}>
@@ -167,11 +158,11 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
           ))}
         </div>
 
-        {/* Image grid or placeholder */}
+        {/* Single image */}
         {isPlaceholder ? (
-          <div className="flex gap-4" style={{ height: 'clamp(200px, 28vw, 380px)' }}>
+          <div style={{ height: 'clamp(200px, 28vw, 380px)' }}>
             <div
-              className="flex-1 rounded-[28px] flex flex-col items-center justify-center gap-2"
+              className="w-full h-full rounded-[24px] flex items-center justify-center"
               style={{ border: `1px dashed ${project.accentColor}30`, background: `${project.accentColor}08` }}
             >
               <span className="terminal-font text-xs" style={{ color: project.accentColor, opacity: 0.5 }}>
@@ -179,54 +170,15 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
               </span>
             </div>
           </div>
-        ) : project.imgRight ? (
-          // 3-image layout: 2 stacked left + 1 tall right
-          <div className="flex gap-3 sm:gap-4" style={{ height: 'clamp(200px, 28vw, 380px)' }}>
-            <div className="flex flex-col gap-3" style={{ width: '40%' }}>
-              <img
-                src={project.img1}
-                alt={project.name}
-                loading="lazy"
-                className="w-full object-cover rounded-[24px]"
-                style={{ flex: 1, minHeight: 0 }}
-              />
-              {project.img2 && (
-                <img
-                  src={project.img2}
-                  alt={project.name}
-                  loading="lazy"
-                  className="w-full object-cover rounded-[24px]"
-                  style={{ flex: 1, minHeight: 0, objectPosition: 'top' }}
-                />
-              )}
-            </div>
-            <img
-              src={project.imgRight}
-              alt={project.name}
-              loading="lazy"
-              className="object-cover rounded-[24px]"
-              style={{ flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'top' }}
-            />
-          </div>
         ) : (
-          // 2-image layout: side by side
-          <div className="flex gap-3 sm:gap-4" style={{ height: 'clamp(200px, 28vw, 380px)' }}>
+          <div style={{ height: 'clamp(200px, 28vw, 380px)' }}>
             <img
-              src={project.img1}
+              src={project.img}
               alt={project.name}
               loading="lazy"
-              className="object-cover rounded-[24px]"
-              style={{ flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'top' }}
+              className="w-full h-full object-cover rounded-[24px]"
+              style={{ objectPosition: 'top' }}
             />
-            {project.img2 && (
-              <img
-                src={project.img2}
-                alt={project.name}
-                loading="lazy"
-                className="object-cover rounded-[24px]"
-                style={{ flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'top' }}
-              />
-            )}
           </div>
         )}
       </motion.div>
