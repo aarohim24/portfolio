@@ -1,5 +1,3 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
 import FadeIn from './ui/FadeIn'
 
 interface Project {
@@ -55,128 +53,108 @@ const PROJECTS: Project[] = [
     description:
       'Campus-wide PWA — marketplace, carpooling, alumni network. 300+ users onboarded in 24 hours, zero downtime. Multi-tenant PostgreSQL with Supabase RLS-enforced RBAC, GitHub Actions CI/CD.',
     tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
-    link: 'https://github.com/aarohim24',
+    link: 'https://social-sandy-psi.vercel.app',
     accentColor: '#a78bfa',
   },
 ]
-
-// ── Single card with correct sticky+scale stacking ──────────────────────────
-function ProjectCard({ project, index, total }: { project: Project; index: number; total: number }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  // useScroll targets the 85vh container
-  // offset: ['start start', 'end start'] → progress goes 0→1 as the container
-  // scrolls fully past the viewport top. The sticky card stays visible throughout.
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  })
-
-  // Last card never scales; earlier cards scale down more
-  const targetScale = 1 - (total - 1 - index) * 0.04
-  const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale])
-
-  return (
-    <div ref={containerRef} style={{ height: 'clamp(280px, 38vh, 360px)' }}>
-      <motion.div
-        style={{
-          scale,
-          position: 'sticky',
-          top: `${96 + index * 28}px`,
-          background: '#0f0f0f',
-          border: '1px solid #2a2a2a',
-          borderRadius: '40px',
-          overflow: 'hidden',
-        }}
-        className="w-full p-4 sm:p-6 md:p-8"
-      >
-        {/* Top row: number · category · title · date · link */}
-        <div className="flex flex-wrap items-baseline justify-between gap-4 mb-6">
-          <div className="flex items-baseline gap-4 sm:gap-6">
-            <span
-              className="font-black leading-none select-none"
-              style={{ fontSize: 'clamp(2.5rem, 7vw, 80px)', color: '#1f1f1f' }}
-            >
-              {project.num}
-            </span>
-            <div>
-              <p
-                className="terminal-font text-xs uppercase tracking-widest mb-0.5"
-                style={{ color: project.accentColor }}
-              >
-                {project.category}
-              </p>
-              <h3
-                className="font-black uppercase leading-none"
-                style={{ fontSize: 'clamp(1.3rem, 3vw, 2.5rem)', color: '#D7E2EA' }}
-              >
-                {project.name}
-              </h3>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="terminal-font text-xs" style={{ color: '#555' }}>
-              {project.date}
-            </span>
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full px-5 py-2 font-medium uppercase tracking-widest text-xs sm:text-sm transition-all hover:bg-[#D7E2EA]/10"
-              style={{ border: '1.5px solid #D7E2EA40', color: '#D7E2EA' }}
-            >
-              View Project
-            </a>
-          </div>
-        </div>
-
-        {/* Description strip */}
-        <p
-          className="font-light leading-relaxed mb-5 max-w-3xl"
-          style={{ color: '#666', fontSize: 'clamp(0.8rem, 1.3vw, 1rem)' }}
-        >
-          {project.description}
-        </p>
-
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-2">
-          {project.tech.map((t) => (
-            <span
-              key={t}
-              className="terminal-font text-xs px-3 py-1 rounded-full"
-              style={{ background: `${project.accentColor}15`, color: project.accentColor, border: `1px solid ${project.accentColor}30` }}
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-
-
-      </motion.div>
-    </div>
-  )
-}
 
 export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="px-4 sm:px-6 md:px-8 pt-16 sm:pt-20 md:pt-24 pb-20 rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14"
+      className="px-5 sm:px-8 md:px-12 lg:px-16 pt-16 sm:pt-20 md:pt-24 pb-20 rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14"
       style={{ background: '#0C0C0C', position: 'relative', zIndex: 10 }}
     >
-      <FadeIn delay={0} y={40} className="mb-12 sm:mb-16">
-        <h2
-          className="hero-heading font-black uppercase leading-none tracking-tight text-center"
-          style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
-        >
-          Projects
-        </h2>
-      </FadeIn>
-
       <div className="max-w-6xl mx-auto">
-        {PROJECTS.map((p, i) => (
-          <ProjectCard key={p.num} project={p} index={i} total={PROJECTS.length} />
-        ))}
+        <FadeIn delay={0} y={40} className="mb-12 sm:mb-16 md:mb-20">
+          <h2
+            className="hero-heading font-black uppercase leading-none tracking-tight"
+            style={{ fontSize: 'clamp(3.5rem, 11vw, 140px)' }}
+          >
+            Projects
+          </h2>
+        </FadeIn>
+
+        <div className="flex flex-col">
+          {PROJECTS.map((p, i) => (
+            <FadeIn key={p.num} delay={i * 0.08} y={20}>
+              <div
+                className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-12 lg:gap-16 items-start py-8 sm:py-10"
+                style={{
+                  borderTop: i === 0 ? '1px solid #1a1a1a' : undefined,
+                  borderBottom: '1px solid #1a1a1a',
+                }}
+              >
+                {/* Number */}
+                <span
+                  className="font-black leading-none hidden md:block shrink-0"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 56px)', color: '#1e1e1e', minWidth: '2ch' }}
+                >
+                  {p.num}
+                </span>
+
+                {/* Content */}
+                <div>
+                  {/* Title row */}
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 mb-3">
+                    <h3
+                      className="font-black uppercase"
+                      style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 2.2vw, 1.8rem)' }}
+                    >
+                      {p.name}
+                    </h3>
+                    <span
+                      className="font-medium"
+                      style={{ color: p.accentColor, fontSize: 'clamp(0.8rem, 1.2vw, 1rem)' }}
+                    >
+                      · {p.category}
+                    </span>
+                  </div>
+
+                  {/* Badges */}
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span
+                      className="terminal-font text-xs px-2.5 py-[3px] rounded-full uppercase tracking-wider"
+                      style={{ background: `${p.accentColor}18`, color: p.accentColor, border: `1px solid ${p.accentColor}28` }}
+                    >
+                      {p.date}
+                    </span>
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="terminal-font text-xs px-2.5 py-[3px] rounded-full uppercase tracking-wider transition-opacity hover:opacity-70"
+                      style={{ background: '#1a1a1a', color: '#888', border: '1px solid #2a2a2a' }}
+                    >
+                      View Project ↗
+                    </a>
+                  </div>
+
+                  {/* Description */}
+                  <p
+                    className="font-light leading-relaxed mb-4 max-w-2xl"
+                    style={{ color: '#777', fontSize: 'clamp(0.82rem, 1.2vw, 0.97rem)' }}
+                  >
+                    {p.description}
+                  </p>
+
+                  {/* Tech tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {p.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="terminal-font text-xs px-2.5 py-1 rounded-full"
+                        style={{ background: `${p.accentColor}12`, color: p.accentColor, border: `1px solid ${p.accentColor}25` }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
       </div>
     </section>
   )
