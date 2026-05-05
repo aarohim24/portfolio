@@ -10,7 +10,6 @@ interface Project {
   description: string
   tech: string[]
   link: string
-  img: string
   accentColor: string
 }
 
@@ -24,7 +23,6 @@ const PROJECTS: Project[] = [
       'AI analytics platform — upload CSV up to 50MB, query in natural language, get 4 viz types and LLM-generated insights across 7 REST endpoints. 83% test coverage, Docker + GitHub Actions CI/CD.',
     tech: ['Python', 'FastAPI', 'NumPy', 'PostgreSQL', 'Docker'],
     link: 'https://autoinsight-peach.vercel.app/',
-    img: '/portfolio/screenshots/autoinsight-1.png',
     accentColor: '#4ade80',
   },
   {
@@ -36,7 +34,6 @@ const PROJECTS: Project[] = [
       'FAISS-indexed RAG pipeline grounding Llama 3.3 across 4 interview question types. Sub-5ms retrieval post warm-up. LLM-guided scoring (0–10 per answer). Deployed on Vercel + Railway.',
     tech: ['React', 'FastAPI', 'FAISS', 'Llama 3.3', 'Railway'],
     link: 'https://smartprep-ai-ten.vercel.app/',
-    img: '/portfolio/screenshots/smartprep-1.png',
     accentColor: '#60a5fa',
   },
   {
@@ -48,7 +45,6 @@ const PROJECTS: Project[] = [
       '2,600+ active users · 33K interactions in 30 days (Google Analytics). 40+ food outlet listings with category filtering — serving students with local caterers unlisted on Swiggy/Zomato.',
     tech: ['HTML', 'CSS', 'JavaScript', 'Netlify'],
     link: 'https://foodie-spot.netlify.app/',
-    img: '/portfolio/screenshots/foodspot-1.png',
     accentColor: '#f97316',
   },
   {
@@ -60,7 +56,6 @@ const PROJECTS: Project[] = [
       'Campus-wide PWA — marketplace, carpooling, alumni network. 300+ users onboarded in 24 hours, zero downtime. Multi-tenant PostgreSQL with Supabase RLS-enforced RBAC, GitHub Actions CI/CD.',
     tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'GitHub Actions'],
     link: 'https://github.com/aarohim24',
-    img: '/portfolio/screenshots/social-1.png',
     accentColor: '#a78bfa',
   },
 ]
@@ -80,8 +75,6 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
   // Last card never scales; earlier cards scale down more
   const targetScale = 1 - (total - 1 - index) * 0.04
   const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale])
-
-  const isPlaceholder = !project.img
 
   return (
     <div ref={containerRef} style={{ height: '85vh' }}>
@@ -158,29 +151,7 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
           ))}
         </div>
 
-        {/* Single image */}
-        {isPlaceholder ? (
-          <div style={{ height: 'clamp(200px, 28vw, 380px)' }}>
-            <div
-              className="w-full h-full rounded-[24px] flex items-center justify-center"
-              style={{ border: `1px dashed ${project.accentColor}30`, background: `${project.accentColor}08` }}
-            >
-              <span className="terminal-font text-xs" style={{ color: project.accentColor, opacity: 0.5 }}>
-                Screenshots coming soon
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div style={{ height: 'clamp(200px, 28vw, 380px)' }}>
-            <img
-              src={project.img}
-              alt={project.name}
-              loading="lazy"
-              className="w-full h-full object-cover rounded-[24px]"
-              style={{ objectPosition: 'top' }}
-            />
-          </div>
-        )}
+
       </motion.div>
     </div>
   )
