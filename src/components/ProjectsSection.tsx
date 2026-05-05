@@ -77,7 +77,7 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
   const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale])
 
   return (
-    <div ref={containerRef} style={{ height: '85vh' }}>
+    <div ref={containerRef} style={{ height: 'clamp(280px, 38vh, 360px)' }}>
       <motion.div
         style={{
           scale,
@@ -139,7 +139,7 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
         </p>
 
         {/* Tech tags */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
             <span
               key={t}
