@@ -62,7 +62,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="px-5 sm:px-8 md:px-12 lg:px-16 pt-16 sm:pt-20 md:pt-24 pb-20 rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14"
+      className="px-5 sm:px-8 md:px-12 lg:px-16 py-16 sm:py-20 md:py-24 rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14"
       style={{ background: '#0C0C0C', position: 'relative', zIndex: 10 }}
     >
       <div className="max-w-6xl mx-auto">
@@ -79,7 +79,7 @@ export default function ProjectsSection() {
           {PROJECTS.map((p, i) => (
             <FadeIn key={p.num} delay={i * 0.08} y={20}>
               <div
-                className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-12 lg:gap-16 items-start py-8 sm:py-10"
+                className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-4 md:gap-10 lg:gap-16 items-start py-8 sm:py-10"
                 style={{
                   borderTop: i === 0 ? '1px solid #1a1a1a' : undefined,
                   borderBottom: '1px solid #1a1a1a',
@@ -95,8 +95,7 @@ export default function ProjectsSection() {
 
                 {/* Content */}
                 <div>
-                  {/* Title row */}
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 mb-3">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-3">
                     <h3
                       className="font-black uppercase"
                       style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 2.2vw, 1.8rem)' }}
@@ -104,33 +103,13 @@ export default function ProjectsSection() {
                       {p.name}
                     </h3>
                     <span
-                      className="font-medium"
-                      style={{ color: p.accentColor, fontSize: 'clamp(0.8rem, 1.2vw, 1rem)' }}
+                      className="terminal-font text-xs uppercase tracking-widest"
+                      style={{ color: p.accentColor }}
                     >
-                      · {p.category}
+                      {p.category}
                     </span>
                   </div>
 
-                  {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-2 mb-4">
-                    <span
-                      className="terminal-font text-xs px-2.5 py-[3px] rounded-full uppercase tracking-wider"
-                      style={{ background: `${p.accentColor}18`, color: p.accentColor, border: `1px solid ${p.accentColor}28` }}
-                    >
-                      {p.date}
-                    </span>
-                    <a
-                      href={p.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="terminal-font text-xs px-2.5 py-[3px] rounded-full uppercase tracking-wider transition-opacity hover:opacity-70"
-                      style={{ background: '#1a1a1a', color: '#888', border: '1px solid #2a2a2a' }}
-                    >
-                      View Project ↗
-                    </a>
-                  </div>
-
-                  {/* Description */}
                   <p
                     className="font-light leading-relaxed mb-4 max-w-2xl"
                     style={{ color: '#777', fontSize: 'clamp(0.82rem, 1.2vw, 0.97rem)' }}
@@ -138,18 +117,37 @@ export default function ProjectsSection() {
                     {p.description}
                   </p>
 
-                  {/* Tech tags */}
                   <div className="flex flex-wrap gap-2">
                     {p.tech.map((t) => (
                       <span
                         key={t}
                         className="terminal-font text-xs px-2.5 py-1 rounded-full"
-                        style={{ background: `${p.accentColor}12`, color: p.accentColor, border: `1px solid ${p.accentColor}25` }}
+                        style={{
+                          background: `${p.accentColor}15`,
+                          color: p.accentColor,
+                          border: `1px solid ${p.accentColor}30`,
+                        }}
                       >
                         {t}
                       </span>
                     ))}
                   </div>
+                </div>
+
+                {/* Date + Link */}
+                <div className="flex md:flex-col items-start md:items-end gap-3 md:gap-2 shrink-0">
+                  <span className="terminal-font text-xs" style={{ color: '#3a3a3a' }}>
+                    {p.date}
+                  </span>
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full px-4 py-1.5 font-medium uppercase tracking-widest text-xs transition-all hover:bg-[#D7E2EA]/10"
+                    style={{ border: '1.5px solid #D7E2EA30', color: '#D7E2EA' }}
+                  >
+                    View →
+                  </a>
                 </div>
               </div>
             </FadeIn>

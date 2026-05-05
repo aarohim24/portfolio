@@ -40,11 +40,11 @@ export default function FreelanceSection() {
             style={{ background: '#141414', border: '1px solid #1e1e1e' }}
           >
             {/* Screenshot Banner */}
-            <div style={{ height: 'clamp(180px, 22vw, 280px)', overflow: 'hidden' }}>
+            <div style={{ background: '#f5f0e8', overflow: 'hidden' }}>
               <img
                 src="/portfolio/screenshots/petsomuch-1.png"
                 alt="Pet So Much website"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-auto block"
               />
             </div>
 
