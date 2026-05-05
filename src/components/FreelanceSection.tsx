@@ -42,7 +42,7 @@ export default function FreelanceSection() {
             {/* Screenshot Banner */}
             <div style={{ height: 'clamp(180px, 22vw, 280px)', overflow: 'hidden' }}>
               <img
-                src="/screenshots/petsomuch-1.png"
+                src="/portfolio/screenshots/petsomuch-1.png"
                 alt="Pet So Much website"
                 className="w-full h-full object-cover object-top"
               />
