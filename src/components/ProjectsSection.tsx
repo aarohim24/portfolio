@@ -11,8 +11,8 @@ interface Project {
   tech: string[]
   link: string
   img1: string
-  img2: string
-  imgRight: string
+  img2?: string
+  imgRight?: string
   accentColor: string
 }
 
@@ -70,7 +70,6 @@ const PROJECTS: Project[] = [
     link: 'https://github.com/aarohim24',
     img1: '/portfolio/screenshots/social-1.png',
     img2: '/portfolio/screenshots/social-2.png',
-    imgRight: '/portfolio/screenshots/social-3.png',
     accentColor: '#a78bfa',
   },
 ]
@@ -180,9 +179,9 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
               </span>
             </div>
           </div>
-        ) : (
+        ) : project.imgRight ? (
+          // 3-image layout: 2 stacked left + 1 tall right
           <div className="flex gap-3 sm:gap-4" style={{ height: 'clamp(200px, 28vw, 380px)' }}>
-            {/* Left col: 2 stacked */}
             <div className="flex flex-col gap-3" style={{ width: '40%' }}>
               <img
                 src={project.img1}
@@ -191,15 +190,16 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
                 className="w-full object-cover rounded-[24px]"
                 style={{ flex: 1, minHeight: 0 }}
               />
-              <img
-                src={project.img2}
-                alt={project.name}
-                loading="lazy"
-                className="w-full object-cover rounded-[24px]"
-                style={{ flex: 1, minHeight: 0, objectPosition: 'top' }}
-              />
+              {project.img2 && (
+                <img
+                  src={project.img2}
+                  alt={project.name}
+                  loading="lazy"
+                  className="w-full object-cover rounded-[24px]"
+                  style={{ flex: 1, minHeight: 0, objectPosition: 'top' }}
+                />
+              )}
             </div>
-            {/* Right col: 1 tall */}
             <img
               src={project.imgRight}
               alt={project.name}
@@ -207,6 +207,26 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
               className="object-cover rounded-[24px]"
               style={{ flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'top' }}
             />
+          </div>
+        ) : (
+          // 2-image layout: side by side
+          <div className="flex gap-3 sm:gap-4" style={{ height: 'clamp(200px, 28vw, 380px)' }}>
+            <img
+              src={project.img1}
+              alt={project.name}
+              loading="lazy"
+              className="object-cover rounded-[24px]"
+              style={{ flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'top' }}
+            />
+            {project.img2 && (
+              <img
+                src={project.img2}
+                alt={project.name}
+                loading="lazy"
+                className="object-cover rounded-[24px]"
+                style={{ flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'top' }}
+              />
+            )}
           </div>
         )}
       </motion.div>
