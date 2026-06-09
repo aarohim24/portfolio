@@ -11,15 +11,6 @@ export interface ExperienceEntry {
 export const EXPERIENCES: ExperienceEntry[] = [
   {
     num: '01',
-    role: 'Software Development Engineer',
-    company: 'Osyte Inc.',
-    period: 'Present',
-    type: 'Current Role',
-    bullets: [],
-    accent: '#38bdf8',
-  },
-  {
-    num: '02',
     role: 'Founder & Full-Stack Developer',
     company: 'Mosaic',
     period: 'Nov 2025 – Present',
@@ -32,7 +23,7 @@ export const EXPERIENCES: ExperienceEntry[] = [
     accent: '#a78bfa',
   },
   {
-    num: '03',
+    num: '02',
     role: 'Creator & Sole Developer',
     company: 'FoodieSpot',
     period: 'Jun 2025 – Present',
@@ -44,7 +35,7 @@ export const EXPERIENCES: ExperienceEntry[] = [
     accent: '#f97316',
   },
   {
-    num: '04',
+    num: '03',
     role: 'Web Development Intern',
     company: 'Picraft Technology Pvt. Ltd.',
     period: 'Jun 2025 – Jul 2025',
