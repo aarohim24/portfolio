@@ -1,37 +1,7 @@
 import AnimatedText from './ui/AnimatedText'
 import FadeIn from './ui/FadeIn'
 import ContactButton from './ui/ContactButton'
-
-const ABOUT_TEXT =
-  "B.Tech CSE (AI/ML) student at UPES Dehradun with proven experience shipping production-grade systems across full-stack development, RAG pipelines, and cloud-deployed AI — serving 2,600+ users across platforms with zero critical defects at release and an IEEE-published research contribution."
-
-// CGPA removed per user request — 3 stats only
-const STATS = [
-  { value: 'Top 10', label: 'GenAI Hackathon', sub: '250,000+ global participants' },
-  { value: 'IEEE', label: 'Published', sub: 'ETIS-2025 · Energy-efficient ML' },
-  { value: '2.6K+', label: 'Active Users', sub: 'Across live deployed products' },
-]
-
-const HIGHLIGHTS = [
-  {
-    icon: '🏆',
-    title: 'Google GenAI Exchange Hackathon',
-    detail: 'Top 10 Finalist · 250,000+ registrations · GenAI-based Youth Mental Wellness prototype',
-    accent: '#4ade80',
-  },
-  {
-    icon: '⭐',
-    title: 'CodeChef 3★  ·  Rating 1620',
-    detail: 'Competitive programmer · DSA & problem solving',
-    accent: '#f97316',
-  },
-  {
-    icon: '✏️',
-    title: 'Leadership & Activities',
-    detail: 'Head, Creative Team — UPES Cultural Committee (100+ volunteers) · City Head (Meta) — Share A Book India',
-    accent: '#60a5fa',
-  },
-]
+import { ABOUT_TEXT, STATS, HIGHLIGHTS } from '../data/about'
 
 export default function AboutSection() {
   return (
@@ -96,14 +66,14 @@ export default function AboutSection() {
         {/* Divider */}
         <div className="mb-8 sm:mb-10" style={{ borderTop: '1px solid #1a1a1a' }} />
 
-        {/* Recognition label — brighter */}
+        {/* Recognition label */}
         <FadeIn delay={0.15} y={0}>
           <p className="terminal-font text-xs uppercase tracking-[0.2em] mb-5" style={{ color: '#666' }}>
             Recognition &amp; Leadership
           </p>
         </FadeIn>
 
-        {/* Highlight cards — brighter body text */}
+        {/* Highlight cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-12 sm:mb-16">
           {HIGHLIGHTS.map((h, i) => (
             <FadeIn key={h.title} delay={0.05 + i * 0.07} y={20}>

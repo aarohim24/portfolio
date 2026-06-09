@@ -39,15 +39,6 @@ export default function FreelanceSection() {
             className="rounded-3xl overflow-hidden"
             style={{ background: '#141414', border: '1px solid #1e1e1e' }}
           >
-            {/* Screenshot Banner */}
-            <div style={{ background: '#f5f0e8', overflow: 'hidden' }}>
-              <img
-                src="/portfolio/screenshots/petsomuch-1.png"
-                alt="Pet So Much website"
-                className="w-full h-auto block"
-              />
-            </div>
-
             {/* Content */}
             <div className="p-6 sm:p-8 md:p-10">
               <div className="flex flex-wrap items-center gap-3 mb-4">

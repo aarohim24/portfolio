@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { CONTACT_EMAIL, CONTACT_GITHUB, CONTACT_LINKEDIN } from '../lib/constants'
 
 type Line = { type: 'cmd' | 'out' | 'empty'; text: string }
 
@@ -13,7 +14,7 @@ const AUTO_SEQUENCE = [
   },
   {
     cmd: 'ls projects/',
-    output: ['  autoinsight/   smartprep-ai/   foodspot/   upes-social/'],
+    output: ['  mosaic/   smartprep-ai/   autoinsight/   foodspot/'],
   },
   {
     cmd: 'cat skills.txt',
@@ -33,9 +34,9 @@ const STATIC_RESPONSES: Record<string, string[]> = {
   'ls projects/': AUTO_SEQUENCE[1].output,
   projects: AUTO_SEQUENCE[1].output,
   contact: [
-    '  Email .... aarohi.123455@stu.upes.ac.in',
-    '  GitHub ... github.com/aarohim24',
-    '  LinkedIn . linkedin.com/in/aarohi-mathur-60968121a',
+    `  Email .... ${CONTACT_EMAIL}`,
+    `  GitHub ... ${CONTACT_GITHUB.replace('https://', '')}`,
+    `  LinkedIn . ${CONTACT_LINKEDIN.replace('https://www.', '')}`,
   ],
   clear: [],
 }

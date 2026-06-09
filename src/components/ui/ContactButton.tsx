@@ -1,6 +1,8 @@
+import { CONTACT_EMAIL } from '../../lib/constants'
+
 interface Props { href?: string; label?: string }
 
-export default function ContactButton({ href = 'mailto:aarohi.123455@stu.upes.ac.in', label = 'Get In Touch' }: Props) {
+export default function ContactButton({ href = `mailto:${CONTACT_EMAIL}`, label = 'Get In Touch' }: Props) {
   return (
     <a
       href={href}

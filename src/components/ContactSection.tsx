@@ -1,11 +1,11 @@
-import React from 'react'
 import FadeIn from './ui/FadeIn'
+import { CONTACT_EMAIL, CONTACT_GITHUB, CONTACT_LINKEDIN, CONTACT_CODECHEF } from '../lib/constants'
 
 const LINKS = [
-  { label: 'Email', value: 'Aarohiwork24@gmail.com', href: 'mailto:Aarohiwork24@gmail.com' },
-  { label: 'GitHub', value: 'github.com/aarohim24', href: 'https://github.com/aarohim24' },
-  { label: 'LinkedIn', value: 'linkedin.com/in/mathur-aarohi', href: 'https://www.linkedin.com/in/mathur-aarohi' },
-  { label: 'CodeChef', value: 'aarohim024 · 3★', href: 'https://www.codechef.com/users/aarohim024' },
+  { label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { label: 'GitHub', value: 'github.com/aarohim24', href: CONTACT_GITHUB },
+  { label: 'LinkedIn', value: 'linkedin.com/in/mathur-aarohi', href: CONTACT_LINKEDIN },
+  { label: 'CodeChef', value: 'aarohim024 · 3★', href: CONTACT_CODECHEF },
 ]
 
 export default function ContactSection() {
@@ -32,6 +32,7 @@ export default function ContactSection() {
                 href={l.href}
                 target={l.href.startsWith('mailto') ? undefined : '_blank'}
                 rel="noopener noreferrer"
+                aria-label={`${l.label}: ${l.value}`}
                 className="flex flex-col gap-1 p-6 rounded-2xl transition-all hover:border-[#4ade80]/40 hover:-translate-y-1 group"
                 style={{ background: '#111', border: '1px solid #2a2a2a' }}
               >
@@ -42,9 +43,9 @@ export default function ContactSection() {
           ))}
         </div>
 
-        <FadeIn delay={0.4} y={20} className="mt-16 pt-8" style={{ borderTop: '1px solid #1a1a1a' } as React.CSSProperties}>
+        <FadeIn delay={0.4} y={20} className="mt-16 pt-8" style={{ borderTop: '1px solid #1a1a1a' }}>
           <div className="flex justify-between items-center">
-            <p className="terminal-font text-xs" style={{ color: '#333' }}>© 2025 Aarohi Mathur</p>
+            <p className="terminal-font text-xs" style={{ color: '#333' }}>© 2026 Aarohi Mathur</p>
             <p className="terminal-font text-xs" style={{ color: '#333' }}>UPES Dehradun · AI/ML · Expected 2027</p>
           </div>
         </FadeIn>

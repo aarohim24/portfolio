@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-
-const EASE = [0.22, 1, 0.36, 1] as const
-const LINE1 = 'Aarohi'.split('')
-const LINE2 = 'Mathur'.split('')
+import { EASE, NAME_LINE1, NAME_LINE2 } from '../lib/constants'
 
 interface Props {
   onComplete: () => void
@@ -82,7 +79,7 @@ export default function LoadingScreen({ onComplete }: Props) {
       >
         {/* Line 1 — Aarohi */}
         <div style={{ display: 'flex', overflow: 'hidden', lineHeight: 0.85 }}>
-          {LINE1.map((char, i) => (
+          {NAME_LINE1.map((char, i) => (
             <span
               key={i}
               style={{ display: 'inline-block', overflow: 'hidden', lineHeight: 0.95 }}
@@ -113,7 +110,7 @@ export default function LoadingScreen({ onComplete }: Props) {
 
         {/* Line 2 — Mathur */}
         <div style={{ display: 'flex', overflow: 'hidden', lineHeight: 0.85 }}>
-          {LINE2.map((char, i) => (
+          {NAME_LINE2.map((char, i) => (
             <span
               key={i}
               style={{ display: 'inline-block', overflow: 'hidden', lineHeight: 0.95 }}

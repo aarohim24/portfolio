@@ -1,10 +1,8 @@
 import { motion } from 'framer-motion'
 import ContactButton from './ui/ContactButton'
+import { EASE, NAME_LINE1, NAME_LINE2 } from '../lib/constants'
 
-const NAV_LINKS = ['about', 'experience', 'skills', 'projects']
-const EASE = [0.22, 1, 0.36, 1] as const
-const LINE1 = 'Aarohi'.split('')
-const LINE2 = 'Mathur'.split('')
+const NAV_LINKS = ['about', 'experience', 'skills', 'projects'] as const
 
 export default function HeroSection() {
   const scrollTo = (id: string) =>
@@ -24,6 +22,7 @@ export default function HeroSection() {
           <button
             key={item}
             onClick={() => scrollTo(item)}
+            aria-label={`Navigate to ${item} section`}
             className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider transition-opacity hover:opacity-60"
             style={{ color: '#D7E2EA' }}
           >
@@ -37,7 +36,7 @@ export default function HeroSection() {
 
         {/* AAROHI — inset */}
         <div className="flex px-4 sm:px-6 md:px-10" style={{ overflow: 'hidden' }}>
-          {LINE1.map((char, i) => (
+          {NAME_LINE1.map((char, i) => (
             <span key={i} style={{ display: 'inline-block', overflow: 'hidden', lineHeight: 0.9 }}>
               <motion.span
                 initial={{ y: '110%' }}
@@ -59,7 +58,7 @@ export default function HeroSection() {
 
         {/* MATHUR — full bleed */}
         <div className="flex" style={{ overflow: 'hidden', width: '100vw' }}>
-          {LINE2.map((char, i) => (
+          {NAME_LINE2.map((char, i) => (
             <span key={i} style={{ display: 'inline-block', overflow: 'hidden', lineHeight: 0.9 }}>
               <motion.span
                 initial={{ y: '110%' }}

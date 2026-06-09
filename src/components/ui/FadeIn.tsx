@@ -1,6 +1,5 @@
-import React from 'react'
+import { CSSProperties, ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { ReactNode } from 'react'
 
 interface Props {
   children: ReactNode
@@ -9,7 +8,7 @@ interface Props {
   x?: number
   y?: number
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
 
 export default function FadeIn({ children, delay = 0, duration = 0.7, x = 0, y = 30, className, style }: Props) {
