@@ -11,6 +11,15 @@ export interface ExperienceEntry {
 export const EXPERIENCES: ExperienceEntry[] = [
   {
     num: '01',
+    role: 'Software Developer Intern',
+    company: 'Osyte Inc.',
+    period: 'Jun 2026 – Aug 2026',
+    type: 'Internship',
+    bullets: [],
+    accent: '#8B7DB3',
+  },
+  {
+    num: '02',
     role: 'Founder & Full-Stack Developer',
     company: 'Mosaic',
     period: 'Nov 2025 – Present',
@@ -20,10 +29,10 @@ export const EXPERIENCES: ExperienceEntry[] = [
       'Designed a multi-tenant PostgreSQL schema with Supabase RLS-enforced RBAC across 3 user roles, eliminating cross-tenant data exposure.',
       'Integrated GitHub Actions CI with type checking, linting, and build validation on every commit — preventing broken deployments from reaching active users.',
     ],
-    accent: '#a78bfa',
+    accent: '#7D99A3',
   },
   {
-    num: '02',
+    num: '03',
     role: 'Creator & Sole Developer',
     company: 'FoodieSpot',
     period: 'Jun 2025 – Present',
@@ -32,10 +41,10 @@ export const EXPERIENCES: ExperienceEntry[] = [
       'Conceived and shipped a campus food discovery platform indexing 40+ local outlets, filling a gap left by Swiggy/Zomato for unlisted campus caterers near UPES.',
       'Reached 2,600+ active users and 33K+ interactions in the first 30 days, tracked organically via Google Analytics.',
     ],
-    accent: '#f97316',
+    accent: '#6B4730',
   },
   {
-    num: '03',
+    num: '04',
     role: 'Web Development Intern',
     company: 'Picraft Technology Pvt. Ltd.',
     period: 'Jun 2025 – Jul 2025',
@@ -44,6 +53,6 @@ export const EXPERIENCES: ExperienceEntry[] = [
       'Delivered a production-grade React application integrated with REST APIs within a 6-week deadline — zero high-severity defects, earning client sign-off on first review.',
       'Built reusable UI components with React, JavaScript, HTML, and CSS following a component-driven architecture.',
     ],
-    accent: '#4ade80',
+    accent: '#6B8FA3',
   },
 ]
