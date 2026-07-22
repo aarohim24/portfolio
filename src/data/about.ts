@@ -22,21 +22,21 @@ export interface Highlight {
 
 export const HIGHLIGHTS: Highlight[] = [
   {
-    icon: '🏆',
+    icon: '',
     title: 'Google GenAI Exchange Hackathon',
     detail: 'Top 10 Finalist · 250,000+ registrations · GenAI-based Youth Mental Wellness prototype',
     accent: '#4ade80',
   },
   {
-    icon: '⭐',
+    icon: '',
     title: 'CodeChef 3★  ·  Rating 1620',
     detail: 'Competitive programmer · DSA & problem solving',
     accent: '#f97316',
   },
   {
-    icon: '✏️',
+    icon: '',
     title: 'Leadership & Activities',
-    detail: 'Head, Creative Team — UPES Cultural Committee (100+ volunteers) · City Head (Meta) — Share A Book India',
+    detail: 'City Head, Kota — Share A Book India Association · Head, Creative Team — UPES Cultural Committee (100+ volunteers)',
     accent: '#60a5fa',
   },
 ]
