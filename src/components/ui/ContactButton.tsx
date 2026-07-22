@@ -8,8 +8,8 @@ export default function ContactButton({ href = `mailto:${CONTACT_EMAIL}`, label 
       href={href}
       className="inline-block rounded-full font-black uppercase tracking-widest transition-all hover:opacity-80 active:scale-95"
       style={{
-        background: '#D7E2EA',
-        color: '#0C0C0C',
+        background: '#4A2B17',
+        color: '#C5E0E6',
         padding: 'clamp(0.65rem, 1.2vw, 0.9rem) clamp(1.5rem, 3vw, 2.8rem)',
         fontSize: 'clamp(0.72rem, 1.1vw, 0.9rem)',
       }}

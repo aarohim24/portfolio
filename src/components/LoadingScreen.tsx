@@ -42,7 +42,7 @@ export default function LoadingScreen({ onComplete }: Props) {
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        background: '#0a0a0a',
+        background: '#C5E0E6',
         overflow: 'hidden',
       }}
     >
@@ -55,17 +55,17 @@ export default function LoadingScreen({ onComplete }: Props) {
           position: 'absolute',
           top: 'clamp(1.5rem, 4vw, 3rem)',
           left: 'clamp(1.5rem, 4vw, 3rem)',
-          fontFamily: 'JetBrains Mono, monospace',
+          fontFamily: 'Fira Code, monospace',
           fontSize: 'clamp(0.6rem, 0.9vw, 0.75rem)',
           letterSpacing: '0.3em',
           textTransform: 'uppercase',
-          color: '#555',
+          color: '#8B6A55',
         }}
       >
         Portfolio
       </motion.div>
 
-      {/* ── Name — letter-by-letter clip-mask reveal ──────────── */}
+      {/* ── Name — word-level reveal (script font needs room) ────── */}
       <div
         style={{
           position: 'absolute',
@@ -78,65 +78,41 @@ export default function LoadingScreen({ onComplete }: Props) {
         }}
       >
         {/* Line 1 — Aarohi */}
-        <div style={{ display: 'flex', overflow: 'hidden', lineHeight: 0.85 }}>
-          {NAME_LINE1.map((char, i) => (
-            <span
-              key={i}
-              style={{ display: 'inline-block', overflow: 'hidden', lineHeight: 0.95 }}
-            >
-              <motion.span
-                initial={{ y: '110%' }}
-                animate={{ y: '0%' }}
-                transition={{
-                  duration: 0.75,
-                  delay: 0.15 + i * 0.055,
-                  ease: EASE,
-                }}
-                style={{
-                  display: 'inline-block',
-                  fontFamily: '"Instrument Serif", serif',
-                  fontStyle: 'italic',
-                  fontSize: 'clamp(3.5rem, 12vw, 11rem)',
-                  color: '#f5f5f5',
-                  lineHeight: 0.95,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                {char}
-              </motion.span>
-            </span>
-          ))}
+        <div style={{ overflow: 'hidden', paddingTop: '0.3em', paddingBottom: '0.1em' }}>
+          <motion.div
+            initial={{ y: '110%' }}
+            animate={{ y: '0%' }}
+            transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
+            style={{
+              fontFamily: '"Pinyon Script", cursive',
+              fontWeight: 400,
+              fontSize: 'clamp(3.5rem, 11vw, 10rem)',
+              color: '#4A2B17',
+              lineHeight: 1.1,
+              letterSpacing: '0.02em',
+            }}
+          >
+            {NAME_LINE1.join('')}
+          </motion.div>
         </div>
 
         {/* Line 2 — Mathur */}
-        <div style={{ display: 'flex', overflow: 'hidden', lineHeight: 0.85 }}>
-          {NAME_LINE2.map((char, i) => (
-            <span
-              key={i}
-              style={{ display: 'inline-block', overflow: 'hidden', lineHeight: 0.95 }}
-            >
-              <motion.span
-                initial={{ y: '110%' }}
-                animate={{ y: '0%' }}
-                transition={{
-                  duration: 0.75,
-                  delay: 0.5 + i * 0.055,
-                  ease: EASE,
-                }}
-                style={{
-                  display: 'inline-block',
-                  fontFamily: '"Instrument Serif", serif',
-                  fontStyle: 'italic',
-                  fontSize: 'clamp(3.5rem, 12vw, 11rem)',
-                  color: '#f5f5f5',
-                  lineHeight: 0.95,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                {char}
-              </motion.span>
-            </span>
-          ))}
+        <div style={{ overflow: 'hidden', paddingTop: '0.05em', paddingBottom: '0.3em' }}>
+          <motion.div
+            initial={{ y: '110%' }}
+            animate={{ y: '0%' }}
+            transition={{ duration: 0.8, delay: 0.45, ease: EASE }}
+            style={{
+              fontFamily: '"Pinyon Script", cursive',
+              fontWeight: 400,
+              fontSize: 'clamp(3.5rem, 11vw, 10rem)',
+              color: '#4A2B17',
+              lineHeight: 1.1,
+              letterSpacing: '0.02em',
+            }}
+          >
+            {NAME_LINE2.join('')}
+          </motion.div>
         </div>
 
         {/* Sub-label — AI Engineer */}
@@ -146,11 +122,11 @@ export default function LoadingScreen({ onComplete }: Props) {
           transition={{ duration: 0.6, delay: 1.1, ease: EASE }}
           style={{
             marginTop: 'clamp(0.75rem, 2vw, 1.5rem)',
-            fontFamily: 'JetBrains Mono, monospace',
+            fontFamily: 'Fira Code, monospace',
             fontSize: 'clamp(0.6rem, 1vw, 0.8rem)',
             letterSpacing: '0.25em',
             textTransform: 'uppercase',
-            color: '#555',
+            color: '#8B6A55',
           }}
         >
           AI Engineer · Full-Stack Developer · IEEE Published
@@ -166,9 +142,10 @@ export default function LoadingScreen({ onComplete }: Props) {
           position: 'absolute',
           bottom: 'clamp(1.5rem, 4vw, 3rem)',
           right: 'clamp(1.5rem, 4vw, 3rem)',
-          fontFamily: '"Instrument Serif", serif',
+          fontFamily: 'Fraunces, serif',
           fontSize: 'clamp(3.5rem, 10vw, 8rem)',
-          color: 'rgba(245,245,245,0.15)',
+          color: 'rgba(81,50,41,0.1)',
+          fontVariationSettings: '"opsz" 144',
           fontVariantNumeric: 'tabular-nums',
           lineHeight: 1,
           userSelect: 'none',
@@ -185,7 +162,7 @@ export default function LoadingScreen({ onComplete }: Props) {
           left: 0,
           right: 0,
           height: '2px',
-          background: 'rgba(31,31,31,0.6)',
+          background: 'rgba(203,176,147,0.3)',
         }}
       >
         <motion.div
@@ -193,8 +170,8 @@ export default function LoadingScreen({ onComplete }: Props) {
             height: '100%',
             transformOrigin: 'left',
             scaleX: progress / 100,
-            background: 'linear-gradient(90deg, #646973 0%, #BBCCD7 100%)',
-            boxShadow: '0 0 8px rgba(187,204,215,0.3)',
+            background: 'linear-gradient(90deg, #7D99A3 0%, #7D99A3 100%)',
+            boxShadow: '0 0 8px rgba(161,181,168,0.3)',
           }}
           transition={{ duration: 0.05, ease: 'linear' }}
         />

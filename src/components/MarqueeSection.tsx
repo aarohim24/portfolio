@@ -7,7 +7,7 @@ function Tag({ label }: { label: string }) {
   return (
     <div
       className="terminal-font shrink-0 px-5 py-2.5 rounded-full whitespace-nowrap"
-      style={{ border: '1px solid #2a2a2a', color: '#888', fontSize: '0.82rem', background: '#111' }}
+      style={{ border: '1px solid #9BC0C9', color: '#6B4730', fontSize: '0.82rem', background: '#D4E8ED' }}
     >
       {label}
     </div>
@@ -32,7 +32,7 @@ export default function MarqueeSection() {
   const triple = <T,>(arr: T[]) => [...arr, ...arr, ...arr]
 
   return (
-    <section ref={sectionRef} className="pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden" style={{ background: '#0C0C0C' }}>
+    <section ref={sectionRef} className="pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden" style={{ background: '#C5E0E6' }}>
       {/* Row 1: moves right */}
       <div className="flex gap-3 mb-3" style={{ transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}>
         {triple(ROW1).map((t, i) => <Tag key={i} label={t} />)}

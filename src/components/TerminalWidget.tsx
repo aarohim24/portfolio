@@ -106,26 +106,26 @@ export default function TerminalWidget() {
   return (
     <div
       className="w-full max-w-2xl rounded-2xl overflow-hidden cursor-text"
-      style={{ background: '#111', border: '1px solid #2a2a2a', boxShadow: '0 20px 60px rgba(0,0,0,0.6)' }}
+      style={{ background: '#D4E8ED', border: '1px solid #9BC0C9', boxShadow: '0 20px 60px rgba(81,50,41,0.12)' }}
       onClick={() => inputRef.current?.focus()}
     >
       {/* Title bar */}
-      <div className="flex items-center gap-2 px-4 py-3" style={{ background: '#1a1a1a', borderBottom: '1px solid #2a2a2a' }}>
+      <div className="flex items-center gap-2 px-4 py-3" style={{ background: '#BDDAE2', borderBottom: '1px solid #9BC0C9' }}>
         <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
         <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
         <span className="w-3 h-3 rounded-full bg-[#28ca42]" />
-        <span className="terminal-font text-xs ml-auto" style={{ color: '#555' }}>aarohi@portfolio:~</span>
+        <span className="terminal-font text-xs ml-auto" style={{ color: '#8B6A55' }}>aarohi@portfolio:~</span>
       </div>
       {/* Output */}
-      <div ref={outputRef} className="terminal-font px-4 py-3 overflow-y-auto" style={{ maxHeight: '220px', fontSize: '0.78rem', color: '#4ade80', lineHeight: 1.7 }}>
+      <div ref={outputRef} className="terminal-font px-4 py-3 overflow-y-auto" style={{ maxHeight: '220px', fontSize: '0.78rem', color: '#7D99A3', lineHeight: 1.7 }}>
         {lines.map((l, i) => (
-          <div key={i} style={{ color: l.type === 'cmd' ? '#4ade80' : '#a0a0a0' }}>
+          <div key={i} style={{ color: l.type === 'cmd' ? '#7D99A3' : '#6B4730' }}>
             {l.text}
           </div>
         ))}
-        {typingCursor && <div style={{ color: '#4ade80' }}>{typingCursor}</div>}
+        {typingCursor && <div style={{ color: '#7D99A3' }}>{typingCursor}</div>}
         {!autoTyping && (
-          <div className="flex items-center gap-1" style={{ color: '#4ade80' }}>
+          <div className="flex items-center gap-1" style={{ color: '#7D99A3' }}>
             <span>$&nbsp;</span>
             <input
               ref={inputRef}
@@ -134,7 +134,7 @@ export default function TerminalWidget() {
               onKeyDown={handleKey}
               autoFocus
               className="terminal-font flex-1 bg-transparent outline-none"
-              style={{ fontSize: '0.78rem', color: '#fff', caretColor: '#4ade80' }}
+              style={{ fontSize: '0.78rem', color: '#4A2B17', caretColor: '#7D99A3' }}
             />
           </div>
         )}
