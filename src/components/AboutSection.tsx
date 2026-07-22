@@ -8,15 +8,16 @@ export default function AboutSection() {
     <section
       id="about"
       className="px-5 sm:px-8 md:px-12 lg:px-16 py-20 sm:py-28 md:py-36"
-      style={{ background: '#0C0C0C' }}
+      style={{ background: '#C5E0E6' }}
     >
       <div className="max-w-6xl mx-auto">
 
         {/* Heading */}
         <FadeIn delay={0} y={40} className="mb-12 sm:mb-16 md:mb-20">
+
           <h2
-            className="hero-heading font-black uppercase leading-none tracking-tight"
-            style={{ fontSize: 'clamp(3.5rem, 11vw, 140px)' }}
+            className="hero-heading font-black italic leading-none tracking-tight"
+            style={{ fontSize: 'clamp(3.5rem, 11vw, 140px)', fontFamily: '"Playfair Display", serif' }}
           >
             About Me
           </h2>
@@ -27,7 +28,7 @@ export default function AboutSection() {
           <AnimatedText
             text={ABOUT_TEXT}
             className="font-medium leading-relaxed"
-            style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 1.9vw, 1.4rem)', maxWidth: '860px' }}
+            style={{ color: '#4A2B17', fontSize: 'clamp(1rem, 2vw, 1.5rem)', maxWidth: '860px' }}
           />
         </div>
 
@@ -38,23 +39,23 @@ export default function AboutSection() {
               <div
                 key={s.label}
                 className="flex flex-col gap-1.5 p-4 sm:p-5 rounded-2xl"
-                style={{ background: '#111', border: '1px solid #1e1e1e' }}
+                style={{ background: '#D4E8ED', border: '1px dashed #9BC0C9' }}
               >
                 <span
                   className="font-black leading-none"
-                  style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', color: '#D7E2EA' }}
+                  style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', color: '#4A2B17' }}
                 >
                   {s.value}
                 </span>
                 <span
                   className="font-medium uppercase tracking-wider"
-                  style={{ color: '#888', fontSize: 'clamp(0.65rem, 0.9vw, 0.75rem)' }}
+                  style={{ color: '#6B4730', fontSize: 'clamp(0.65rem, 0.9vw, 0.75rem)' }}
                 >
                   {s.label}
                 </span>
                 <span
                   className="terminal-font leading-snug"
-                  style={{ color: '#666', fontSize: 'clamp(0.6rem, 0.8vw, 0.7rem)' }}
+                  style={{ color: '#8B6A55', fontSize: 'clamp(0.6rem, 0.8vw, 0.7rem)' }}
                 >
                   {s.sub}
                 </span>
@@ -63,12 +64,12 @@ export default function AboutSection() {
           </div>
         </FadeIn>
 
-        {/* Divider */}
-        <div className="mb-8 sm:mb-10" style={{ borderTop: '1px solid #1a1a1a' }} />
+        {/* Botanical divider */}
+        <div className="mb-8 sm:mb-10" style={{ borderTop: "1px dashed #A8CDD5" }} />
 
         {/* Recognition label */}
         <FadeIn delay={0.15} y={0}>
-          <p className="terminal-font text-xs uppercase tracking-[0.2em] mb-5" style={{ color: '#666' }}>
+          <p className="terminal-font text-xs uppercase tracking-[0.2em] mb-5" style={{ color: '#8B6A55' }}>
             Recognition &amp; Leadership
           </p>
         </FadeIn>
@@ -78,24 +79,21 @@ export default function AboutSection() {
           {HIGHLIGHTS.map((h, i) => (
             <FadeIn key={h.title} delay={0.05 + i * 0.07} y={20}>
               <div
-                className="flex gap-3 items-start p-4 sm:p-5 rounded-2xl h-full transition-transform hover:-translate-y-0.5"
-                style={{ background: '#111', border: '1px solid #1e1e1e' }}
+                className="flex flex-col gap-2 p-4 sm:p-5 rounded-2xl h-full transition-transform hover:-translate-y-0.5"
+                style={{ background: '#D4E8ED', border: '1px dashed #9BC0C9' }}
               >
-                <span className="text-lg sm:text-xl mt-0.5 shrink-0">{h.icon}</span>
-                <div>
-                  <p
-                    className="font-semibold leading-snug mb-1.5"
-                    style={{ color: '#D7E2EA', fontSize: 'clamp(0.82rem, 1.1vw, 0.92rem)' }}
-                  >
-                    {h.title}
-                  </p>
-                  <p
-                    className="terminal-font leading-relaxed"
-                    style={{ color: '#777', fontSize: '0.7rem' }}
-                  >
-                    {h.detail}
-                  </p>
-                </div>
+                <p
+                  className="font-semibold leading-snug"
+                  style={{ color: '#4A2B17', fontSize: 'clamp(0.82rem, 1.1vw, 0.92rem)' }}
+                >
+                  {h.title}
+                </p>
+                <p
+                  className="terminal-font leading-relaxed"
+                  style={{ color: '#8B6A55', fontSize: '0.7rem' }}
+                >
+                  {h.detail}
+                </p>
               </div>
             </FadeIn>
           ))}
