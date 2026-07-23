@@ -1,5 +1,6 @@
 import FadeIn from './ui/FadeIn'
 import { CONTACT_EMAIL, CONTACT_GITHUB, CONTACT_LINKEDIN, CONTACT_CODECHEF } from '../lib/constants'
+import ContactFloral from './ContactFloral'
 
 const LINKS = [
   { label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
@@ -13,9 +14,10 @@ export default function ContactSection() {
     <section
       id="contact"
       className="px-5 sm:px-8 md:px-12 lg:px-16 py-20 sm:py-28 md:py-36"
-      style={{ background: '#C5E0E6' }}
+      style={{ background: '#C5E0E6', position: 'relative', overflow: 'hidden' }}
     >
-      <div className="max-w-4xl mx-auto">
+      <ContactFloral />
+      <div className="max-w-4xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
         <FadeIn delay={0} y={40}>
           <h2
             className="hero-heading font-black italic leading-none tracking-tight mb-12 sm:mb-16"

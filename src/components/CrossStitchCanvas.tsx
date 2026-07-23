@@ -301,8 +301,13 @@ export default function CrossStitchCanvas() {
       const xFrac = col / totalCols
       const yFrac = row / totalRows
 
-      // Hard clear — bottom-left tagline block
-      if (xFrac < 0.26 && yFrac > 0.78) return 0
+      // Hard clear — bottom-left tagline block.
+      // Tagline text reaches ~160px from section-left on mobile, ~300px on desktop.
+      // Canvas includes OVER=60px extra on the left, so convert to canvas fractions.
+      const sectionW       = (wrap?.offsetWidth ?? W) 
+      const taglineRightPx = sectionW < 640 ? 200 : 320   // section px (with buffer)
+      const xTagClear      = (taglineRightPx + OVER) / W   // canvas fraction
+      if (xFrac < xTagClear && yFrac > 0.78) return 0
 
       // Smooth fade in the name band (centred at 50%, half-width 20%)
       const BASE     = 0.60
