@@ -1,6 +1,7 @@
 import { useRef, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ContactButton from './ui/ContactButton'
+import CrossStitchCanvas from './CrossStitchCanvas'
 import { EASE, NAME_LINE1, NAME_LINE2 } from '../lib/constants'
 
 const NAV_LINKS = ['about', 'experience', 'skills', 'projects'] as const
@@ -75,6 +76,9 @@ export default function HeroSection() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: EASE }}
     >
+
+      {/* ── Floral cross-stitch background layer ── */}
+      <CrossStitchCanvas />
 
       {/* ── Dot-grid overlay — pointer-events:none, masked to cursor spotlight ── */}
       <div ref={dotLayerRef} className="hero-dot-grid" aria-hidden="true" />
