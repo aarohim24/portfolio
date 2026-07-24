@@ -8,27 +8,38 @@ export default function AboutSection() {
     <section
       id="about"
       className="px-5 sm:px-8 md:px-12 lg:px-16 py-14 sm:py-24 md:py-36"
-      style={{ background: '#C5E0E6' }}
+      style={{ background: '#C5E0E6', overflowX: 'hidden' }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto w-full">
 
         {/* Heading */}
         <FadeIn delay={0} y={40} className="mb-12 sm:mb-16 md:mb-20">
 
           <h2
             className="hero-heading font-black italic leading-none tracking-tight"
-            style={{ fontSize: 'clamp(2.8rem, 9vw, 140px)', fontFamily: '"Playfair Display", serif' }}
+            style={{
+              fontSize: 'clamp(2.4rem, 9vw, 140px)',
+              fontFamily: '"Playfair Display", serif',
+              wordBreak: 'break-word',
+              width: '100%',
+            }}
           >
             About Me
           </h2>
         </FadeIn>
 
         {/* Animated paragraph */}
-        <div className="mb-10 sm:mb-14">
+        <div className="mb-10 sm:mb-14" style={{ width: '100%', maxWidth: '860px' }}>
           <AnimatedText
             text={ABOUT_TEXT}
             className="font-medium leading-relaxed"
-            style={{ color: '#4A2B17', fontSize: 'clamp(1rem, 2vw, 1.5rem)', maxWidth: '860px' }}
+            style={{
+              color: '#4A2B17',
+              fontSize: 'clamp(0.875rem, 3.5vw, 1.35rem)',
+              width: '100%',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+            }}
           />
         </div>
 

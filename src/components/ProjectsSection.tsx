@@ -11,8 +11,12 @@ export default function ProjectsSection() {
       <div className="max-w-6xl mx-auto">
         <FadeIn delay={0} y={40} className="mb-12 sm:mb-16 md:mb-20">
           <h2
-            className="hero-heading font-black italic leading-none tracking-tight"
-            style={{ fontSize: 'clamp(3.5rem, 11vw, 140px)', fontFamily: '"Playfair Display", serif' }}
+            className="hero-heading font-black leading-none tracking-tight"
+            style={{
+              fontSize: 'clamp(2.4rem, 9vw, 140px)',
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'normal',
+            }}
           >
             Projects
           </h2>
