@@ -7,7 +7,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="px-5 sm:px-8 md:px-12 lg:px-16 py-20 sm:py-28 md:py-36"
+      className="px-5 sm:px-8 md:px-12 lg:px-16 py-14 sm:py-24 md:py-36"
       style={{ background: '#C5E0E6' }}
     >
       <div className="max-w-6xl mx-auto">
@@ -17,7 +17,7 @@ export default function AboutSection() {
 
           <h2
             className="hero-heading font-black italic leading-none tracking-tight"
-            style={{ fontSize: 'clamp(3.5rem, 11vw, 140px)', fontFamily: '"Playfair Display", serif' }}
+            style={{ fontSize: 'clamp(2.8rem, 9vw, 140px)', fontFamily: '"Playfair Display", serif' }}
           >
             About Me
           </h2>

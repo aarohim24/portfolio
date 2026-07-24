@@ -1,7 +1,12 @@
 import { useRef, useEffect } from 'react'
 
-// ─── Cell size (px per stitch) ─────────────────────────────────────────────
-const CELL = 16
+// ─── Cell size (px per stitch) — computed per render based on viewport width ─
+// Responsive values: mobile 9px, tablet 12px, desktop 16px
+function getCellSize(containerWidth: number): number {
+  if (containerWidth < 640)  return 9
+  if (containerWidth < 1024) return 12
+  return 16
+}
 
 // ─── Color palette — curated to complement #C5E0E6 (cool teal-blue bg) ────
 const P = {
@@ -242,19 +247,20 @@ function drawStitch(
   y:     number,
   color: string,
   alpha: number,
+  cell:  number,
 ) {
   ctx.globalAlpha = alpha
-  const pad = CELL * 0.17
+  const pad = cell * 0.17
   ctx.strokeStyle = color
-  ctx.lineWidth   = 1.35
+  ctx.lineWidth   = cell <= 9 ? 1.0 : 1.35
   ctx.lineCap     = 'round'
   ctx.beginPath()
   ctx.moveTo(x + pad,        y + pad)
-  ctx.lineTo(x + CELL - pad, y + CELL - pad)
+  ctx.lineTo(x + cell - pad, y + cell - pad)
   ctx.stroke()
   ctx.beginPath()
-  ctx.moveTo(x + CELL - pad, y + pad)
-  ctx.lineTo(x + pad,        y + CELL - pad)
+  ctx.moveTo(x + cell - pad, y + pad)
+  ctx.lineTo(x + pad,        y + cell - pad)
   ctx.stroke()
 }
 
@@ -273,6 +279,7 @@ export default function CrossStitchCanvas() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    const CELL = getCellSize(wrap.offsetWidth)
     const OVER = 60
     const W = wrap.offsetWidth  + OVER * 2
     const H = wrap.offsetHeight + OVER * 2
@@ -331,7 +338,7 @@ export default function CrossStitchCanvas() {
         const s = stitches[i]
         const a = stitchAlpha(s.col, s.row)
         if (a < 0.01) continue
-        drawStitch(ctx, s.col * CELL, s.row * CELL, s.color, a)
+        drawStitch(ctx, s.col * CELL, s.row * CELL, s.color, a, CELL)
       }
       drawn = end
       if (drawn < stitches.length) dRafRef.current = requestAnimationFrame(tick)
